@@ -10,17 +10,21 @@ namespace TapperSharp
         private readonly SocketIOClient.SocketIO _client;
         public TapperClient(string host, SocketIOOptions? socketIOOptions = null)
         {
-           _client = new SocketIOClient.SocketIO(host);
+            if(socketIOOptions == null)
+            {
+                _client = new SocketIOClient.SocketIO(host);
+            }
+            else
+            {
+                _client = new SocketIOClient.SocketIO(host, socketIOOptions);
+            }
             _client.On("response", response =>
             {
-                // You can print the returned data first to decide what to do next.
-                // output: ["hi client"]
+ 
                 Console.WriteLine(response);
 
                 string text = response.GetValue<string>();
 
-                // The socket.io server code looks like this:
-                // socket.emit('hi', 'hi client');
             });
             _client.OnConnected += async (sender, e) =>
             {
