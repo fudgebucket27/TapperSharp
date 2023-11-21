@@ -40,12 +40,18 @@ namespace TapperSharp
 
         public async Task ConnectAsync()
         {
-            await _client.ConnectAsync();
+            if (!_client.Connected)
+            {
+                await _client.ConnectAsync();
+            }
         }
 
         public async Task DisconnectAsync()
         {
-            await _client.DisconnectAsync();
+            if (_client.Connected)
+            {
+                await _client.DisconnectAsync();
+            }
         }
     }
 }
