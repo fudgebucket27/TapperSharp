@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34024.191
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TapperSharp", "TapperSharp\TapperSharp.csproj", "{822E77BB-069D-4A3F-8DC2-9ACB2E036039}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TapperConsole", "TapperConsole\TapperConsole.csproj", "{A26FDB0E-FC9D-4751-B7CD-5D4F80438C1C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{822E77BB-069D-4A3F-8DC2-9ACB2E036039} = {822E77BB-069D-4A3F-8DC2-9ACB2E036039}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{822E77BB-069D-4A3F-8DC2-9ACB2E036039}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{822E77BB-069D-4A3F-8DC2-9ACB2E036039}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{822E77BB-069D-4A3F-8DC2-9ACB2E036039}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{822E77BB-069D-4A3F-8DC2-9ACB2E036039}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A26FDB0E-FC9D-4751-B7CD-5D4F80438C1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A26FDB0E-FC9D-4751-B7CD-5D4F80438C1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A26FDB0E-FC9D-4751-B7CD-5D4F80438C1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A26FDB0E-FC9D-4751-B7CD-5D4F80438C1C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3AFC699C-2E72-4B95-85A1-FE836A8F1FEB}
+	EndGlobalSection
+EndGlobal
