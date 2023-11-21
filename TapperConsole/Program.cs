@@ -7,7 +7,7 @@ namespace TapperConsole
         static async Task Main(string[] args)
         {
             var client = new TapperClient();
-            await client.ConnectAsync(new Uri("ws://tap.trac.network"));
+            await client.ConnectAsync(new Uri("wss://tap.trac.network"));
 
         }
     }
