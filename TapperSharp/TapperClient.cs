@@ -1,49 +1,47 @@
 ﻿
-using System.Net.WebSockets;
-using System.Text;
+
+using SocketIO;
+using SocketIOClient;
 
 namespace TapperSharp
 {
     public class TapperClient : ITapperClient
-    {
-        private readonly ClientWebSocket _client = new ClientWebSocket();
-
-        public async Task ConnectAsync(Uri serverUri)
+    { 
+        private readonly SocketIOClient.SocketIO _client;
+        public TapperClient(string host, SocketIOOptions? socketIOOptions = null)
         {
-            try
+           _client = new SocketIOClient.SocketIO(host);
+            _client.On("response", response =>
             {
-                await _client.ConnectAsync(serverUri, CancellationToken.None);
-                Console.WriteLine("Connected!");
-            }
-            catch (Exception ex)
+                // You can print the returned data first to decide what to do next.
+                // output: ["hi client"]
+                Console.WriteLine(response);
+
+                string text = response.GetValue<string>();
+
+                // The socket.io server code looks like this:
+                // socket.emit('hi', 'hi client');
+            });
+            _client.OnConnected += async (sender, e) =>
             {
-                Console.WriteLine($"Error during connection: {ex.Message}");
-            }
+                // Emit a string
+                //await _client.EmitAsync("hi", "socket.io");
+                Console.WriteLine($"Connected to {host}");
+            };
+            _client.OnDisconnected += async (sender, e) =>
+            {
+                Console.WriteLine($"Disconnected from {host}");
+            };
         }
 
-        public async Task SendAsync(string message)
+        public async Task ConnectAsync()
         {
-            var encoded = Encoding.UTF8.GetBytes(message);
-            var buffer = new ArraySegment<Byte>(encoded, 0, encoded.Length);
-
-            await _client.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
-        }
-
-        public async Task<string> ReceiveAsync()
-        {
-            var buffer = new ArraySegment<byte>(new byte[2048]);
-            WebSocketReceiveResult result = await _client.ReceiveAsync(buffer, CancellationToken.None);
-
-            return Encoding.UTF8.GetString(buffer.Array, 0, result.Count);
+            await _client.ConnectAsync();
         }
 
         public async Task DisconnectAsync()
         {
-            if (_client.State == WebSocketState.Open)
-            {
-                await _client.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
-                Console.WriteLine("Disconnected!");
-            }
+            await _client.DisconnectAsync();
         }
     }
 }

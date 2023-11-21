@@ -8,9 +8,7 @@ namespace TapperSharp
 {
     public interface ITapperClient
     {
-        Task ConnectAsync(Uri serverUri);
-        Task SendAsync(string message);
-        Task<string> ReceiveAsync();
+        Task ConnectAsync();
         Task DisconnectAsync();
     }
 }
