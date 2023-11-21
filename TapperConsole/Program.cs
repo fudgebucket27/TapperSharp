@@ -1,4 +1,5 @@
 ﻿using TapperSharp;
+using TapperSharp.Services;
 
 namespace TapperConsole
 {
@@ -6,9 +7,11 @@ namespace TapperConsole
     {
         static async Task Main(string[] args)
         {
-            var client = new TapperClient("https://tap.trac.network");
-            await client.ConnectAsync();
-            await client.DisconnectAsync();
+            var tapperClient = new TapperClient("https://tap.trac.network");
+            await tapperClient.ConnectAsync();
+            await tapperClient.GetDeploymentAsync("tap");
+            await tapperClient.DisconnectAsync();
+   
         }
     }
 }

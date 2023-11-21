@@ -2,15 +2,16 @@
 
 using SocketIO;
 using SocketIOClient;
+using TapperSharp.Models;
 
-namespace TapperSharp
+namespace TapperSharp.Services
 {
     public class TapperClient : ITapperClient
-    { 
+    {
         private readonly SocketIOClient.SocketIO _client;
         public TapperClient(string host, SocketIOOptions? socketIOOptions = null)
         {
-            if(socketIOOptions == null)
+            if (socketIOOptions == null)
             {
                 _client = new SocketIOClient.SocketIO(host);
             }
@@ -20,10 +21,9 @@ namespace TapperSharp
             }
             _client.On("response", response =>
             {
- 
-                Console.WriteLine(response);
 
-                string text = response.GetValue<string>();
+                var msg = response.GetValue<string>();
+                Console.WriteLine(msg);
 
             });
             _client.OnConnected += async (sender, e) =>
@@ -52,6 +52,16 @@ namespace TapperSharp
             {
                 await _client.DisconnectAsync();
             }
+        }
+
+        public async Task GetDeploymentAsync(string ticker)
+        {
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "deployment",
+                Args = new[] {ticker},
+                CallId = "getDeployment"
+            });
         }
     }
 }
