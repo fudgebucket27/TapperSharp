@@ -85,6 +85,13 @@ namespace TapperSharp.Services
                         deploymentsCompletionSource.TrySetResult(deploymentsResponse);
                     }
                     break;
+                case "mintTokensLeft":
+                    var mintTokensLeftResponse = JsonSerializer.Deserialize<TapResponse<string>>(jsonResponseGeneric);
+                    if (_responseCompletionSources.TryRemove(mintTokensLeftResponse!.CallId!, out var mintTokensLeftCompletionSource))
+                    {
+                        mintTokensLeftCompletionSource.TrySetResult(mintTokensLeftResponse);
+                    }
+                    break;
                 default:
                     Console.WriteLine("Not valid!");
                     break;
@@ -140,6 +147,23 @@ namespace TapperSharp.Services
             });
             var response = await completionSource.Task;
             return response as TapResponse<List<DeploymentResult>>;
+        }
+
+        public async Task<TapResponse<string>?> GetMintTokensLeftAsync(string ticker)
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "mintTokensLeft",
+                Args = new[] { ticker },
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<string>;
         }
     }
 }

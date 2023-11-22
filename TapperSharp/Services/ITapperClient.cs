@@ -14,5 +14,6 @@ namespace TapperSharp.Services
         Task<TapResponse<DeploymentResult>?> GetDeploymentAsync(string ticker);
         Task<TapResponse<int>?> GetDeploymentsLengthAsync();
         Task<TapResponse<List<DeploymentResult>>?> GetDeploymentsAsync(int offset, int max);
+        Task<TapResponse<string>?> GetMintTokensLeftAsync(string ticker);
     }
 }

@@ -49,5 +49,12 @@ namespace TapperTests
             var result = await _tapperClient!.GetDeploymentsAsync(0,5);
             Assert.AreEqual(5, result!.Result!.Count);
         }
+
+        [TestMethod]
+        public async Task TestGetMintTokensLeft()
+        {
+            var result = await _tapperClient!.GetMintTokensLeftAsync("tap");
+            Assert.AreEqual("0", result!.Result!);
+        }
     }
 }

@@ -20,12 +20,14 @@ namespace TapperConsole
             };
             var tapperClient = new TapperClient("https://tap.trac.network", socketIOOptions);
             await tapperClient.ConnectAsync();
-            var tapDeployment = await tapperClient.GetDeploymentAsync("tap");
-            Console.WriteLine(JsonSerializer.Serialize(tapDeployment,  new JsonSerializerOptions() { WriteIndented = true}));
-            var deploymentsLength = await tapperClient.GetDeploymentsLengthAsync();
-            Console.WriteLine(JsonSerializer.Serialize(deploymentsLength, new JsonSerializerOptions() { WriteIndented = true }));
-            var deployments = await tapperClient.GetDeploymentsAsync(0,10);
-            Console.WriteLine(JsonSerializer.Serialize(deployments, new JsonSerializerOptions() { WriteIndented = true }));
+            //var tapDeployment = await tapperClient.GetDeploymentAsync("tap");
+            //Console.WriteLine(JsonSerializer.Serialize(tapDeployment,  new JsonSerializerOptions() { WriteIndented = true}));
+            //var deploymentsLength = await tapperClient.GetDeploymentsLengthAsync();
+            //Console.WriteLine(JsonSerializer.Serialize(deploymentsLength, new JsonSerializerOptions() { WriteIndented = true }));
+            //var deployments = await tapperClient.GetDeploymentsAsync(0,10);
+            //Console.WriteLine(JsonSerializer.Serialize(deployments, new JsonSerializerOptions() { WriteIndented = true }));
+            //var mintTokensLeft = await tapperClient.GetMintTokensLeftAsync("tap");
+            //Console.WriteLine(JsonSerializer.Serialize(mintTokensLeft, new JsonSerializerOptions() { WriteIndented = true }));
             await tapperClient.DisconnectAsync();
         }
     }
