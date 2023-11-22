@@ -7,34 +7,52 @@ using System.Threading.Tasks;
 
 namespace TapperSharp.Models
 {
-    public class TapResponse
+    public class TapResponse<T>
     {
         [JsonPropertyName("error")]
-        public string Error { get; set; }
+        public string? Error { get; set; }
 
         [JsonPropertyName("func")]
-        public string Func { get; set; }
+        public string? Func { get; set; }
 
         [JsonPropertyName("args")]
-        public List<string> Args { get; set; }
+        public List<string?>? Args { get; set; }
 
         [JsonPropertyName("call_id")]
-        public string CallId { get; set; }
+        public string? CallId { get; set; }
 
         [JsonPropertyName("result")]
-        public object Result { get; set; }
+        public T? Result { get; set; }
     }
 
-    public class DeyplomentResult
+    public class TapResponseBase
+    {
+        [JsonPropertyName("error")]
+        public string? Error { get; set; }
+
+        [JsonPropertyName("func")]
+        public string? Func { get; set; }
+
+        [JsonPropertyName("args")]
+        public List<string?>? Args { get; set; }
+
+        [JsonPropertyName("call_id")]
+        public string? CallId { get; set; }
+
+        [JsonPropertyName("result")]
+        public object? Result { get; set; }
+    }
+
+    public class DeploymentResult
     {
         [JsonPropertyName("tick")]
-        public string Tick { get; set; }
+        public string? Tick { get; set; }
 
         [JsonPropertyName("max")]
-        public string Max { get; set; }
+        public string? Max { get; set; }
 
         [JsonPropertyName("lim")]
-        public string Lim { get; set; }
+        public string? Lim { get; set; }
 
         [JsonPropertyName("dec")]
         public int Dec { get; set; }
@@ -43,10 +61,10 @@ namespace TapperSharp.Models
         public int Blck { get; set; }
 
         [JsonPropertyName("tx")]
-        public string Tx { get; set; }
+        public string? Tx { get; set; }
 
         [JsonPropertyName("ins")]
-        public string Ins { get; set; }
+        public string? Ins { get; set; }
 
         [JsonPropertyName("num")]
         public long Num { get; set; }
@@ -55,14 +73,9 @@ namespace TapperSharp.Models
         public long Ts { get; set; }
 
         [JsonPropertyName("addr")]
-        public string Addr { get; set; }
+        public string? Addr { get; set; }
 
         [JsonPropertyName("crsd")]
         public bool Crsd { get; set; }
-    }
-
-    public class DeploymentsLengthResult
-    {
-
     }
 }
