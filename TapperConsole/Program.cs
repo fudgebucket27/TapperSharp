@@ -1,4 +1,6 @@
 ﻿using SocketIOClient;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using TapperSharp;
 using TapperSharp.Services;
 
@@ -18,9 +20,11 @@ namespace TapperConsole
             };
             var tapperClient = new TapperClient("https://tap.trac.network", socketIOOptions);
             await tapperClient.ConnectAsync();
-            await tapperClient.GetDeploymentAsync("tap");
+            var tapDeployment = await tapperClient.GetDeploymentAsync("tap");
+            Console.WriteLine(JsonSerializer.Serialize(tapDeployment,  new JsonSerializerOptions() { WriteIndented = true}));
+            var deploymentsLength = await tapperClient.GetDeploymentsLengthAsync();
+            Console.WriteLine(JsonSerializer.Serialize(deploymentsLength, new JsonSerializerOptions() { WriteIndented = true }));
             await tapperClient.DisconnectAsync();
-   
         }
     }
 }

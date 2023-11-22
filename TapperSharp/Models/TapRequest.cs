@@ -13,7 +13,7 @@ namespace TapperSharp.Models
         public string? Func { get; set; }
 
         [JsonPropertyName("args")]
-        public string[]? Args { get; set; }
+        public object[]? Args { get; set; }
 
         [JsonPropertyName("call_id")]
         public string? CallId { get; set; }
