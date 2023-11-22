@@ -44,6 +44,7 @@ namespace TapperSharp.Services
             };
         }
 
+        /// <inheritdoc/>
         public async Task ConnectAsync()
         {
             if (!_client.Connected)
@@ -52,6 +53,7 @@ namespace TapperSharp.Services
             }
         }
 
+        /// <inheritdoc/>
         public async Task DisconnectAsync()
         {
             if (_client.Connected)
@@ -60,6 +62,11 @@ namespace TapperSharp.Services
             }
         }
 
+        /// <summary>
+        /// Handles the response type from server. Use to set the completion sources concurrent dictionary
+        /// </summary>
+        /// <param name="func">The function</param>
+        /// <param name="jsonResponseGeneric">The json response from the server</param>
         private void HandleResponseType(string func, string jsonResponseGeneric)
         {
             switch (func)
@@ -98,6 +105,7 @@ namespace TapperSharp.Services
             }
         }
 
+        /// <inheritdoc/>
         public async Task<TapResponse<DeploymentResult>?> GetDeploymentAsync(string ticker)
         {
             var callId = Guid.NewGuid().ToString(); 
@@ -115,6 +123,7 @@ namespace TapperSharp.Services
             return response as TapResponse<DeploymentResult>;
         }
 
+        /// <inheritdoc/>
         public async Task<TapResponse<int>?> GetDeploymentsLengthAsync()
         {
             var callId = Guid.NewGuid().ToString();
@@ -132,6 +141,7 @@ namespace TapperSharp.Services
             return response as TapResponse<int>;
         }
 
+        /// <inheritdoc/>
         public async Task<TapResponse<List<DeploymentResult>>?> GetDeploymentsAsync(int offset, int max)
         {
             var callId = Guid.NewGuid().ToString();
@@ -149,6 +159,7 @@ namespace TapperSharp.Services
             return response as TapResponse<List<DeploymentResult>>;
         }
 
+        /// <inheritdoc/>
         public async Task<TapResponse<string>?> GetMintTokensLeftAsync(string ticker)
         {
             var callId = Guid.NewGuid().ToString();
