@@ -27,7 +27,7 @@ namespace TapperSharp.Services
                 var jsonResponseBaseString = JsonSerializer.Serialize(response.GetValue<TapResponseBase>());
                 var jsonResponseBaseObject = JsonSerializer.Deserialize<TapResponseBase>(jsonResponseBaseString);
                 var jsonResponseGenericString = JsonSerializer.Serialize(response.GetValue<object>());
-                string func = jsonResponseBaseObject!.Func!;
+                var func = jsonResponseBaseObject!.Func!;
                 HandleResponseType(func, jsonResponseGenericString);
             });
             _client.OnConnected += (sender, e) =>
