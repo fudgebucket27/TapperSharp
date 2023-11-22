@@ -11,7 +11,7 @@ namespace TapperSharp.Services
     public class TapperClient : ITapperClient
     {
         private readonly SocketIOClient.SocketIO _client;
-        private readonly ConcurrentDictionary<string, TaskCompletionSource<TapResponse>> _responseCompletionSources = new ConcurrentDictionary<string, TaskCompletionSource<TapResponse>>();
+        private readonly ConcurrentDictionary<string, TaskCompletionSource<object>> _responseCompletionSources = new ConcurrentDictionary<string, TaskCompletionSource<object>>();
         public TapperClient(string host, SocketIOOptions? socketIOOptions = null)
         {
             if (socketIOOptions == null)
@@ -24,11 +24,17 @@ namespace TapperSharp.Services
             }
             _client.On("response", response =>
             {
-                var jsonResponse = JsonSerializer.Serialize(response.GetValue<TapResponse>());
-                var tapResponse = JsonSerializer.Deserialize<TapResponse>(jsonResponse);
-                if (_responseCompletionSources.TryRemove(tapResponse.CallId, out var completionSource))
+                var jsonResponseBaseString = JsonSerializer.Serialize(response.GetValue<TapResponseBase>());
+                var jsonResponseBaseObject = JsonSerializer.Deserialize<TapResponseBase>(jsonResponseBaseString);
+                var jsonResponseGeneric = JsonSerializer.Serialize(response);
+                string func = jsonResponseBaseObject.Func;
+                Type resultType = GetResultType(func);
+                Type tapResponseType = typeof(TapResponse<>).MakeGenericType(resultType);
+                object tapResponse = JsonSerializer.Deserialize(jsonResponseGeneric, tapResponseType);
+
+                if (tapResponse is TapResponse<object> genericResponse && _responseCompletionSources.TryRemove(genericResponse.CallId, out var completionSource))
                 {
-                    completionSource.TrySetResult(response.GetValue<TapResponse>());
+                    completionSource.TrySetResult(genericResponse);
                 }
             });
             _client.OnConnected += (sender, e) =>
@@ -57,11 +63,25 @@ namespace TapperSharp.Services
             }
         }
 
-        public async Task<TapResponse> GetDeploymentAsync(string ticker)
+        private Type GetResultType(string func)
+        {
+            switch (func)
+            {
+                case "deployment":
+                    return typeof(DeploymentResult);
+                case "deploymentsLength":
+                    return typeof(DeploymentsLengthResult);
+                // Add more cases as needed for other func types
+                default:
+                    throw new InvalidOperationException("Unknown func type");
+            }
+        }
+
+        public async Task<TapResponse<DeploymentResult>> GetDeploymentAsync(string ticker)
         {
             var callId = Guid.NewGuid().ToString(); // Generate a unique identifier
 
-            var completionSource = new TaskCompletionSource<TapResponse>();
+            var completionSource = new TaskCompletionSource<object>();
             _responseCompletionSources[callId] = completionSource;
 
             await _client.EmitAsync("get", new TapRequest()
@@ -70,14 +90,15 @@ namespace TapperSharp.Services
                 Args = new[] {ticker},
                 CallId = callId
             });
-            return await completionSource.Task;
+            var response = await completionSource.Task;
+            return response as TapResponse<DeploymentResult>;
         }
 
-        public async Task<TapResponse> GetDeploymentsLengthAsync()
+        public async Task<TapResponse<DeploymentsLengthResult>> GetDeploymentsLengthAsync()
         {
             var callId = Guid.NewGuid().ToString(); // Generate a unique identifier
 
-            var completionSource = new TaskCompletionSource<TapResponse>();
+            var completionSource = new TaskCompletionSource<object>();
             _responseCompletionSources[callId] = completionSource;
 
             await _client.EmitAsync("get", new TapRequest()
@@ -86,7 +107,8 @@ namespace TapperSharp.Services
                 Args = new string[0],
                 CallId = callId
             });
-            return await completionSource.Task;
+            var response = await completionSource.Task;
+            return response as TapResponse<DeploymentsLengthResult>;
         }
     }
 }

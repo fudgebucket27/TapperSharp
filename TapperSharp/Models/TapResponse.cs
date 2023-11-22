@@ -7,7 +7,25 @@ using System.Threading.Tasks;
 
 namespace TapperSharp.Models
 {
-    public class TapResponse
+    public class TapResponse<T>
+    {
+        [JsonPropertyName("error")]
+        public string Error { get; set; }
+
+        [JsonPropertyName("func")]
+        public string Func { get; set; }
+
+        [JsonPropertyName("args")]
+        public List<string> Args { get; set; }
+
+        [JsonPropertyName("call_id")]
+        public string CallId { get; set; }
+
+        [JsonPropertyName("result")]
+        public T Result { get; set; }
+    }
+
+    public class TapResponseBase
     {
         [JsonPropertyName("error")]
         public string Error { get; set; }
@@ -25,7 +43,7 @@ namespace TapperSharp.Models
         public object Result { get; set; }
     }
 
-    public class DeyplomentResult
+    public class DeploymentResult
     {
         [JsonPropertyName("tick")]
         public string Tick { get; set; }
