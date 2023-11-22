@@ -10,12 +10,12 @@ namespace TapperSharp.Models
     public class TapRequest
     {
         [JsonPropertyName("func")]
-        public string Func { get; set; }
+        public string? Func { get; set; }
 
         [JsonPropertyName("args")]
-        public string[] Args { get; set; }
+        public string[]? Args { get; set; }
 
         [JsonPropertyName("call_id")]
-        public string CallId { get; set; }
+        public string? CallId { get; set; }
     }
 }

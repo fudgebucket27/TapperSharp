@@ -21,18 +21,14 @@ namespace TapperSharp.Services
             }
             _client.On("response", response =>
             {
-
+                Console.WriteLine(response);
                 var msg = response.GetValue<string>();
-                Console.WriteLine(msg);
-
             });
-            _client.OnConnected += async (sender, e) =>
+            _client.OnConnected += (sender, e) =>
             {
-                // Emit a string
-                //await _client.EmitAsync("hi", "socket.io");
                 Console.WriteLine($"Connected to {host}");
             };
-            _client.OnDisconnected += async (sender, e) =>
+            _client.OnDisconnected += (sender, e) =>
             {
                 Console.WriteLine($"Disconnected from {host}");
             };
