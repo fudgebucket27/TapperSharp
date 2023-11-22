@@ -12,6 +12,6 @@ namespace TapperSharp.Services
         Task ConnectAsync();
         Task DisconnectAsync();
         Task<TapResponse<DeploymentResult>?> GetDeploymentAsync(string ticker);
-        Task<TapResponse<DeploymentsLengthResult>?> GetDeploymentsLengthAsync();
+        Task<TapResponse<int>?> GetDeploymentsLengthAsync();
     }
 }

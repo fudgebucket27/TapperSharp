@@ -26,20 +26,9 @@ namespace TapperSharp.Services
             {
                 var jsonResponseBaseString = JsonSerializer.Serialize(response.GetValue<TapResponseBase>());
                 var jsonResponseBaseObject = JsonSerializer.Deserialize<TapResponseBase>(jsonResponseBaseString);
-                string func = jsonResponseBaseObject.Func;
-                Type resultType = GetResultType(func);
-                Type tapResponseType = typeof(TapResponse<>).MakeGenericType(resultType);
-                var jsonResponseGeneric = JsonSerializer.Serialize(response.GetValue<object>());
-                var tapResponse = JsonSerializer.Deserialize(jsonResponseGeneric, tapResponseType);
-
-                if (tapResponse is TapResponse<object> genericResponse && _responseCompletionSources.TryRemove(genericResponse.CallId, out var completionSource))
-                {
-                    completionSource.TrySetResult(genericResponse);
-                }
-                else
-                {
-                    Console.WriteLine("Not valid!");
-                }
+                var jsonResponseGenericString = JsonSerializer.Serialize(response.GetValue<object>());
+                string func = jsonResponseBaseObject!.Func!;
+                HandleResponseType(func, jsonResponseGenericString);
             });
             _client.OnConnected += (sender, e) =>
             {
@@ -67,21 +56,32 @@ namespace TapperSharp.Services
             }
         }
 
-        private Type GetResultType(string func)
+        private void HandleResponseType(string func, string jsonResponseGeneric)
         {
             switch (func)
             {
                 case "deployment":
-                    return typeof(DeploymentResult);
+                    var deploymentResponse = JsonSerializer.Deserialize<TapResponse<DeploymentResult>>(jsonResponseGeneric);
+                    if (_responseCompletionSources.TryRemove(deploymentResponse!.CallId!, out var deploymentCompletionSource))
+                    {
+                        deploymentCompletionSource.TrySetResult(deploymentResponse);
+                    }
+                    break;
+
                 case "deploymentsLength":
-                    return typeof(DeploymentsLengthResult);
-                // Add more cases as needed for other func types
+                    var deploymentsLengthResponse = JsonSerializer.Deserialize<TapResponse<int>>(jsonResponseGeneric);
+                    if (_responseCompletionSources.TryRemove(deploymentsLengthResponse!.CallId!, out var deploymentLengthsCompletionSource))
+                    {
+                        deploymentLengthsCompletionSource.TrySetResult(deploymentsLengthResponse);
+                    }
+                    break;
                 default:
-                    throw new InvalidOperationException("Unknown func type");
+                    Console.WriteLine("Not valid!");
+                    break;
             }
         }
 
-        public async Task<TapResponse<DeploymentResult>> GetDeploymentAsync(string ticker)
+        public async Task<TapResponse<DeploymentResult>?> GetDeploymentAsync(string ticker)
         {
             var callId = Guid.NewGuid().ToString(); // Generate a unique identifier
 
@@ -91,14 +91,14 @@ namespace TapperSharp.Services
             await _client.EmitAsync("get", new TapRequest()
             {
                 Func = "deployment",
-                Args = new[] {ticker},
+                Args = new[] { ticker },
                 CallId = callId
             });
             var response = await completionSource.Task;
             return response as TapResponse<DeploymentResult>;
         }
 
-        public async Task<TapResponse<DeploymentsLengthResult>> GetDeploymentsLengthAsync()
+        public async Task<TapResponse<int>?> GetDeploymentsLengthAsync()
         {
             var callId = Guid.NewGuid().ToString(); // Generate a unique identifier
 
@@ -112,7 +112,7 @@ namespace TapperSharp.Services
                 CallId = callId
             });
             var response = await completionSource.Task;
-            return response as TapResponse<DeploymentsLengthResult>;
+            return response as TapResponse<int>;
         }
     }
 }
