@@ -71,12 +71,18 @@ namespace TapperSharp.Services
                         deploymentCompletionSource.TrySetResult(deploymentResponse);
                     }
                     break;
-
                 case "deploymentsLength":
                     var deploymentsLengthResponse = JsonSerializer.Deserialize<TapResponse<int>>(jsonResponseGeneric);
                     if (_responseCompletionSources.TryRemove(deploymentsLengthResponse!.CallId!, out var deploymentLengthsCompletionSource))
                     {
                         deploymentLengthsCompletionSource.TrySetResult(deploymentsLengthResponse);
+                    }
+                    break;
+                case "deployments":
+                    var deploymentsResponse = JsonSerializer.Deserialize<TapResponse<List<DeploymentResult>>>(jsonResponseGeneric);
+                    if (_responseCompletionSources.TryRemove(deploymentsResponse!.CallId!, out var deploymentsCompletionSource))
+                    {
+                        deploymentsCompletionSource.TrySetResult(deploymentsResponse);
                     }
                     break;
                 default:
@@ -87,7 +93,7 @@ namespace TapperSharp.Services
 
         public async Task<TapResponse<DeploymentResult>?> GetDeploymentAsync(string ticker)
         {
-            var callId = Guid.NewGuid().ToString(); // Generate a unique identifier
+            var callId = Guid.NewGuid().ToString(); 
 
             var completionSource = new TaskCompletionSource<object>();
             _responseCompletionSources[callId] = completionSource;
@@ -104,7 +110,7 @@ namespace TapperSharp.Services
 
         public async Task<TapResponse<int>?> GetDeploymentsLengthAsync()
         {
-            var callId = Guid.NewGuid().ToString(); // Generate a unique identifier
+            var callId = Guid.NewGuid().ToString();
 
             var completionSource = new TaskCompletionSource<object>();
             _responseCompletionSources[callId] = completionSource;
@@ -117,6 +123,23 @@ namespace TapperSharp.Services
             });
             var response = await completionSource.Task;
             return response as TapResponse<int>;
+        }
+
+        public async Task<TapResponse<List<DeploymentResult>>?> GetDeploymentsAsync(int offset, int max)
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "deployments",
+                Args = new object[] { offset, max },
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<List<DeploymentResult>>;
         }
     }
 }

@@ -24,6 +24,8 @@ namespace TapperConsole
             Console.WriteLine(JsonSerializer.Serialize(tapDeployment,  new JsonSerializerOptions() { WriteIndented = true}));
             var deploymentsLength = await tapperClient.GetDeploymentsLengthAsync();
             Console.WriteLine(JsonSerializer.Serialize(deploymentsLength, new JsonSerializerOptions() { WriteIndented = true }));
+            var deployments = await tapperClient.GetDeploymentsAsync(0,10);
+            Console.WriteLine(JsonSerializer.Serialize(deployments, new JsonSerializerOptions() { WriteIndented = true }));
             await tapperClient.DisconnectAsync();
         }
     }

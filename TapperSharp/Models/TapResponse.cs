@@ -16,7 +16,7 @@ namespace TapperSharp.Models
         public string? Func { get; set; }
 
         [JsonPropertyName("args")]
-        public List<string?>? Args { get; set; }
+        public List<object?>? Args { get; set; }
 
         [JsonPropertyName("call_id")]
         public string? CallId { get; set; }
@@ -34,13 +34,10 @@ namespace TapperSharp.Models
         public string? Func { get; set; }
 
         [JsonPropertyName("args")]
-        public List<string?>? Args { get; set; }
+        public List<object?>? Args { get; set; }
 
         [JsonPropertyName("call_id")]
         public string? CallId { get; set; }
-
-        [JsonPropertyName("result")]
-        public object? Result { get; set; }
     }
 
     public class DeploymentResult
