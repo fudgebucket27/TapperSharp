@@ -22,6 +22,10 @@ namespace TapperSharp.Services
             {
                 _client = new SocketIOClient.SocketIO(host, socketIOOptions);
             }
+            _client.On("error", response =>
+            {
+                Console.WriteLine($"Error {response}");
+            });
             _client.On("response", response =>
             {
                 var jsonResponseBaseString = JsonSerializer.Serialize(response.GetValue<TapResponseBase>());
