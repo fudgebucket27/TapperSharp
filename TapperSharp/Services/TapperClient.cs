@@ -26,15 +26,19 @@ namespace TapperSharp.Services
             {
                 var jsonResponseBaseString = JsonSerializer.Serialize(response.GetValue<TapResponseBase>());
                 var jsonResponseBaseObject = JsonSerializer.Deserialize<TapResponseBase>(jsonResponseBaseString);
-                var jsonResponseGeneric = JsonSerializer.Serialize(response);
                 string func = jsonResponseBaseObject.Func;
                 Type resultType = GetResultType(func);
                 Type tapResponseType = typeof(TapResponse<>).MakeGenericType(resultType);
-                object tapResponse = JsonSerializer.Deserialize(jsonResponseGeneric, tapResponseType);
+                var jsonResponseGeneric = JsonSerializer.Serialize(response.GetValue<object>());
+                var tapResponse = JsonSerializer.Deserialize(jsonResponseGeneric, tapResponseType);
 
                 if (tapResponse is TapResponse<object> genericResponse && _responseCompletionSources.TryRemove(genericResponse.CallId, out var completionSource))
                 {
                     completionSource.TrySetResult(genericResponse);
+                }
+                else
+                {
+                    Console.WriteLine("Not valid!");
                 }
             });
             _client.OnConnected += (sender, e) =>
