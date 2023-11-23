@@ -190,6 +190,20 @@ namespace TapperSharp.Services
                         mintListCompletionSource.TrySetResult(mintListResponse);
                     }
                     break;
+                case "accountTransferListLength":
+                    var accountTransferListLengthResponse = JsonSerializer.Deserialize<TapResponse<long>>(jsonResponseGeneric);
+                    if (_responseCompletionSources.TryRemove(accountTransferListLengthResponse!.CallId!, out var accountTransferListLengthCompletionSource))
+                    {
+                        accountTransferListLengthCompletionSource.TrySetResult(accountTransferListLengthResponse);
+                    }
+                    break;
+                case "transferList":
+                    var transferListResponse = JsonSerializer.Deserialize<TapResponse<List<TransferListResult>>>(jsonResponseGeneric);
+                    if (_responseCompletionSources.TryRemove(transferListResponse!.CallId!, out var transferListCompletionSource))
+                    {
+                        transferListCompletionSource.TrySetResult(transferListResponse);
+                    }
+                    break;
 
                 default:
                     Console.WriteLine("Not valid!");
@@ -431,6 +445,7 @@ namespace TapperSharp.Services
             return response as TapResponse<long>;
         }
 
+        /// <inheritdoc/>
         public async Task<TapResponse<List<MintListResult>>?> GetTickerMintListAsync(string ticker, int offset, int max)
         {
             var callId = Guid.NewGuid().ToString();
@@ -448,6 +463,7 @@ namespace TapperSharp.Services
             return response as TapResponse<List<MintListResult>>;
         }
 
+        /// <inheritdoc/>
         public async Task<TapResponse<long>?> GetMintListLengthAsync()
         {
             var callId = Guid.NewGuid().ToString();
@@ -465,7 +481,7 @@ namespace TapperSharp.Services
             return response as TapResponse<long>;
         }
 
-
+        /// <inheritdoc/>
         public async Task<TapResponse<List<MintListResult>>?> GetMintListAsync(int offset, int max)
         {
             var callId = Guid.NewGuid().ToString();
@@ -481,6 +497,42 @@ namespace TapperSharp.Services
             });
             var response = await completionSource.Task;
             return response as TapResponse<List<MintListResult>>;
+        }
+
+        /// <inheritdoc/>
+        public async Task<TapResponse<long>?> GetAccountTransferListLengthAsync(string address, string ticker)
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "accountTransferListLength",
+                Args = new string[] {address , ticker},
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<long>;
+        }
+
+        /// <inheritdoc/>
+        public async Task<TapResponse<List<TransferListResult>>?> GetTransferListAsync(int offset, int max)
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "transferList",
+                Args = new object[] { offset, max },
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<List<TransferListResult>>;
         }
     }
 }

@@ -158,5 +158,24 @@ namespace TapperSharp.Services
         /// <returns>The list of mints</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<List<MintListResult>>?> GetMintListAsync(int offset, int max);
+
+        /// <summary>
+        /// Get the amount of transfer-inscribes for a ticker by an address.
+        /// </summary>
+        /// <param name="address">The address</param>
+        /// <param name="ticker">The ticker, ie "tap"</param>
+        /// <returns>The amount of transfer-inscribes</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<long>?> GetAccountTransferListLengthAsync(string address, string ticker);
+
+        /// <summary>
+        /// Get transfer list based on a offset and max value. Max value limit is 500.
+        /// Failed mints also show.
+        /// </summary>
+        /// <param name="offset">The offset to start getting data from, ie 0</param>
+        /// <param name="max">The max amount of objects to get per request, ie 10. Limit is 500</param>
+        /// <returns>The list of transfer-inscribe objects</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<List<TransferListResult>>?> GetTransferListAsync(int offset, int max);
     }
 }
