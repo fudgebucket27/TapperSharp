@@ -120,6 +120,13 @@ namespace TapperSharp.Services
                         accountTokensLengthCompletionSource.TrySetResult(accountTokensLengthResponse);
                     }
                     break;
+                case "balance":
+                    var balanceResponse = JsonSerializer.Deserialize<TapResponse<string>>(jsonResponseGeneric);
+                    if (_responseCompletionSources.TryRemove(balanceResponse!.CallId!, out var balanceCompletionSource))
+                    {
+                        balanceCompletionSource.TrySetResult(balanceResponse);
+                    }
+                    break;
                 default:
                     Console.WriteLine("Not valid!");
                     break;
@@ -250,6 +257,24 @@ namespace TapperSharp.Services
             });
             var response = await completionSource.Task;
             return response as TapResponse<int>;
+        }
+
+        /// <inheritdoc/>
+        public async Task<TapResponse<string>?> GetBalanceAsync(string address, string ticker)
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "balance",
+                Args = new[] { address, ticker },
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<string>;
         }
     }
 }

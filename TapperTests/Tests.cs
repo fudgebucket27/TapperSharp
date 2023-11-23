@@ -1,4 +1,5 @@
 using SocketIOClient;
+using System.Text.Json;
 using TapperSharp.Services;
 
 namespace TapperTests
@@ -33,6 +34,7 @@ namespace TapperTests
         public async Task GetDeployment()
         {
             var result = await _tapperClient!.GetDeploymentAsync("tap");
+            Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
             Assert.IsNotNull(result!.Result);
         }
 
@@ -40,6 +42,7 @@ namespace TapperTests
         public async Task GetDeploymentsLength()
         {
             var result = await _tapperClient!.GetDeploymentsLengthAsync();
+            Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
             Assert.AreNotEqual(0, result!.Result);
         }
 
@@ -47,6 +50,7 @@ namespace TapperTests
         public async Task GetDeployments()
         {
             var result = await _tapperClient!.GetDeploymentsAsync(0,5);
+            Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
             Assert.AreEqual(5, result!.Result!.Count);
         }
 
@@ -54,6 +58,7 @@ namespace TapperTests
         public async Task GetMintTokensLeft()
         {
             var result = await _tapperClient!.GetMintTokensLeftAsync("tap");
+            Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
             Assert.AreEqual("0", result!.Result!);
         }
 
@@ -61,6 +66,7 @@ namespace TapperTests
         public async Task GetHoldersLength()
         {
             var result = await _tapperClient!.GetHoldersLengthAsync("tap");
+            Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
             Assert.AreNotEqual(0, result!.Result!);
         }
 
@@ -68,6 +74,7 @@ namespace TapperTests
         public async Task GetHolders()
         {
             var result = await _tapperClient!.GetHoldersAsync("tap", 0, 10);
+            Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
             Assert.AreNotEqual(0, result!.Result!.Count);
         }
 
@@ -75,7 +82,16 @@ namespace TapperTests
         public async Task GetAccountTokensLength()
         {
             var result = await _tapperClient!.GetAccountTokensLengthAsync("bc1paq960e3drpdwddfxh5kcgq48qa5yxeqsty9zez6w2c6mxr5fecrqp0syg0");
+            Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
             Assert.AreNotEqual(0, result!.Result!);
+        }
+
+        [TestMethod]
+        public async Task GetBalance()
+        {
+            var result = await _tapperClient!.GetBalanceAsync("bc1paq960e3drpdwddfxh5kcgq48qa5yxeqsty9zez6w2c6mxr5fecrqp0syg0", "tap");
+            Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
+            Assert.AreNotEqual("0", result!.Result!);
         }
     }
 }

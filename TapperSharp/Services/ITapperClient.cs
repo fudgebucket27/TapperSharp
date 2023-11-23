@@ -68,8 +68,17 @@ namespace TapperSharp.Services
         /// <summary>
         /// Get the amount of tokens held for the given address, it will also return tokens that the address once owned but no longer hold
         /// </summary>
-        /// <param name="ticker">The ticker, ie "tap"</param>
+        /// <param name="address">The address</param>
         /// <returns>The amount of account tokens owned by the address</returns>
         Task<TapResponse<int>?> GetAccountTokensLengthAsync(string address);
+
+
+        /// <summary>
+        /// Get the balance of a ticker for a given address, it will also return tokens that the address once owned but no longer hold
+        /// </summary>
+        /// <param name="address">The address</param>
+        /// <param name="ticker">The ticket, ie "tap"</param>
+        /// <returns>The balance in big integer format</returns>
+        Task<TapResponse<string>?> GetBalanceAsync(string address, string ticker);
     }
 }
