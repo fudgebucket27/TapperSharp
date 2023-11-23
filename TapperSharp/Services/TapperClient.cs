@@ -183,6 +183,14 @@ namespace TapperSharp.Services
                         mintListLengthCompletionSource.TrySetResult(mintListLengthResponse);
                     }
                     break;
+                case "mintList":
+                    var mintListResponse = JsonSerializer.Deserialize<TapResponse<List<MintListResult>>>(jsonResponseGeneric);
+                    if (_responseCompletionSources.TryRemove(mintListResponse!.CallId!, out var mintListCompletionSource))
+                    {
+                        mintListCompletionSource.TrySetResult(mintListResponse);
+                    }
+                    break;
+
                 default:
                     Console.WriteLine("Not valid!");
                     break;
@@ -455,6 +463,24 @@ namespace TapperSharp.Services
             });
             var response = await completionSource.Task;
             return response as TapResponse<long>;
+        }
+
+
+        public async Task<TapResponse<List<MintListResult>>?> GetMintListAsync(int offset, int max)
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "mintList",
+                Args = new object[] {offset, max },
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<List<MintListResult>>;
         }
     }
 }

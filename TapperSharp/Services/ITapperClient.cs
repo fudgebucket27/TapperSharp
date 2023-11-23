@@ -81,7 +81,8 @@ namespace TapperSharp.Services
 
 
         /// <summary>
-        /// Get the balance of a ticker for a given address, it will also return tokens that the address once owned but no longer hold
+        /// Get the balance of a ticker for a given address, 
+        /// Tokens that the address once owned but no longer hold are also returned
         /// </summary>
         /// <param name="address">The address</param>
         /// <param name="ticker">The ticker, ie "tap"</param>
@@ -147,5 +148,15 @@ namespace TapperSharp.Services
         /// <returns>The amount of mints ever performed</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<long>?> GetMintListLengthAsync();
+
+        /// <summary>
+        /// Get mints based on a offset and max value. Max value limit is 500.
+        /// Failed mints also show.
+        /// </summary>
+        /// <param name="offset">The offset to start getting data from, ie 0</param>
+        /// <param name="max">The max amount of mint objects to get per request, ie 10. Limit is 500</param>
+        /// <returns>The list of mints</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<List<MintListResult>>?> GetMintListAsync(int offset, int max);
     }
 }
