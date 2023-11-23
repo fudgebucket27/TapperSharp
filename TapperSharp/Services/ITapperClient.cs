@@ -208,5 +208,22 @@ namespace TapperSharp.Services
         /// <returns>The amount of transfer-inscribes</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<long>?> GetTickerTransferListLengthAsync(string ticker);
+
+        /// <summary>
+        /// Get amount of transfer-inscribes ever performed. Includes failed
+        /// </summary>
+        /// <returns>The amount of transfer-inscribes ever performed</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<long>?> GetTransferListLengthAsync();
+
+        /// <summary>
+        /// Get amount sent based on address, ticker, offset.
+        /// Failed sends also show.
+        /// </summary>
+        /// <param name="address">The address</param>
+        /// <param name="ticker">The ticker, ie "tap".</param>
+        /// <returns>The list of transfer-inscribe objects</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<long>?> GetAccountSentListLengthAsync(string address, string ticker);
     }
 }

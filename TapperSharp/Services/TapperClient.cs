@@ -98,6 +98,8 @@ namespace TapperSharp.Services
                 case "mintListLength":
                 case "accountTransferListLength":
                 case "tickerTransferListLength":
+                case "transferListLength":
+                case "accountSentListLength":
                     HandleGenericResponse<long>(jsonResponse, jsonResponseBase.CallId);
                     break;          
                 case "holders":
@@ -522,6 +524,41 @@ namespace TapperSharp.Services
             });
             var response = await completionSource.Task;
             return response as TapResponse<List<TransferListResult>>;
+        }
+
+        /// <inheritdoc/>
+        public async Task<TapResponse<long>?> GetTransferListLengthAsync()
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "transferListLength",
+                Args = new string[0],
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<long>;
+        }
+
+        public async Task<TapResponse<long>?> GetAccountSentListLengthAsync(string address, string ticker)
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "accountSentListLength",
+                Args = new object[] { address, ticker },
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<long>;
         }
     }
 }
