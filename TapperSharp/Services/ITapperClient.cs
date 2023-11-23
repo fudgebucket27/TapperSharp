@@ -90,5 +90,13 @@ namespace TapperSharp.Services
         /// <param name="max">The max amount of deployments to get per request, ie 10. Limit is 500</param>
         /// <returns>A list of tickers the address holds/held</returns>
         Task<TapResponse<List<string>>?> GetAccountTokensAsync(string address, int offset, int max);
+
+        /// <summary>
+        /// Get the amount of mints for a ticker by an address.
+        /// </summary>
+        /// <param name="address">The address</param>
+        /// <param name="ticker">The ticker, ie "tap"</param>
+        /// <returns>The amount of mints ever performed by the address for the ticker</returns>
+        Task<TapResponse<long>?> GetAccountMintListLengthAsync(string address, string ticker);
     }
 }

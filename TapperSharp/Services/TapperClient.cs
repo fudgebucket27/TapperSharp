@@ -141,6 +141,14 @@ namespace TapperSharp.Services
                         accountTokensCompletionSource.TrySetResult(accountTokensResponse);
                     }
                     break;
+                case "accountMintListLength":
+                    var accountMintListLengthResponse = JsonSerializer.Deserialize<TapResponse<long>>(jsonResponseGeneric);
+                    if (_responseCompletionSources.TryRemove(accountMintListLengthResponse!.CallId!, out var accountMintListLengthCompletionSource))
+                    {
+                        accountMintListLengthCompletionSource.TrySetResult(accountMintListLengthResponse);
+                    }
+                    break;
+
                 default:
                     Console.WriteLine("Not valid!");
                     break;
@@ -150,7 +158,7 @@ namespace TapperSharp.Services
         /// <inheritdoc/>
         public async Task<TapResponse<DeploymentResult>?> GetDeploymentAsync(string ticker)
         {
-            var callId = Guid.NewGuid().ToString(); 
+            var callId = Guid.NewGuid().ToString();
 
             var completionSource = new TaskCompletionSource<object>();
             _responseCompletionSources[callId] = completionSource;
@@ -325,6 +333,24 @@ namespace TapperSharp.Services
             });
             var response = await completionSource.Task;
             return response as TapResponse<List<string>>;
+        }
+
+        /// <inheritdoc/>
+        public async Task<TapResponse<long>?> GetAccountMintListLengthAsync(string address, string ticker)
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "accountMintListLength",
+                Args = new[] { address, ticker },
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<long>;
         }
     }
 }
