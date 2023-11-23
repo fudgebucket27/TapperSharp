@@ -323,6 +323,11 @@ namespace TapperSharp.Models
         [JsonPropertyName("bal")]
         public string? Bal { get; set; }
         /// <summary>
+        /// The transfer balance
+        /// </summary>
+        [JsonPropertyName("tbal")]
+        public string? TBal { get; set; }
+        /// <summary>
         /// The transaction
         /// </summary>
         [JsonPropertyName("tx")]

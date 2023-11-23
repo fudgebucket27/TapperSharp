@@ -125,6 +125,7 @@ namespace TapperSharp.Services
                     HandleGenericResponse<List<TransferListResult>>(jsonResponse, jsonResponseBase.CallId);
                     break;
                 case "accountSentList":
+                case "tickerSentList":
                     HandleGenericResponse<List<SendListResult>>(jsonResponse, jsonResponseBase.CallId);
                     break;
                 default:
@@ -598,6 +599,23 @@ namespace TapperSharp.Services
             });
             var response = await completionSource.Task;
             return response as TapResponse<long>;
+        }
+
+        public async Task<TapResponse<List<SendListResult>>?> GetTickerSentListAsync(string ticker, int offset, int max)
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "tickerSentList",
+                Args = new object[] { ticker, offset, max },
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<List<SendListResult>>;
         }
     }
 }
