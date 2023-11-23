@@ -287,4 +287,71 @@ namespace TapperSharp.Models
         public bool Int { get; set; }
     }
 
+    /// <summary>
+    /// The send list
+    /// </summary>
+    public class SendListResult
+    {
+        /// <summary>
+        /// The address
+        /// </summary>
+        [JsonPropertyName("addr")]
+        public string? Addr { get; set; }
+        /// <summary>
+        /// The to address
+        /// </summary>
+        [JsonPropertyName("taddr")]
+        public string? TAddr { get; set; }
+        /// <summary>
+        /// The block
+        /// </summary>
+        [JsonPropertyName("blck")]
+        public long Blck { get; set; }
+        /// <summary>
+        /// The amount
+        /// </summary>
+        [JsonPropertyName("amt")]
+        public string? Amt { get; set; }
+        /// <summary>
+        /// The transfer
+        /// </summary>
+        [JsonPropertyName("trf")]
+        public string? Trf { get; set; }
+        /// <summary>
+        /// The balance
+        /// </summary>
+        [JsonPropertyName("bal")]
+        public string? Bal { get; set; }
+        /// <summary>
+        /// The transaction
+        /// </summary>
+        [JsonPropertyName("tx")]
+        public string? Tx { get; set; }
+        /// <summary>
+        /// The inscription
+        /// </summary>
+        [JsonPropertyName("ins")]
+        public string? Ins { get; set; }
+        /// <summary>
+        /// The number
+        /// </summary>
+        [JsonPropertyName("num")]
+        public long Num { get; set; }
+        /// <summary>
+        /// The timestamp
+        /// </summary>
+        [JsonPropertyName("ts")]
+        public long Ts { get; set; }
+        /// <summary>
+        /// bool for if failed
+        /// </summary>
+        [JsonPropertyName("fail")]
+        public bool Fail { get; set; }
+        /// <summary>
+        /// The integer
+        /// </summary>
+        [JsonPropertyName("@int")]
+        public bool Int { get; set; }
+    }
+
 }

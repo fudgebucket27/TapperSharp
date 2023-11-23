@@ -217,13 +217,34 @@ namespace TapperSharp.Services
         Task<TapResponse<long>?> GetTransferListLengthAsync();
 
         /// <summary>
-        /// Get amount sent based on address, ticker, offset.
+        /// Get amount sent based on address and ticker
         /// Failed sends also show.
         /// </summary>
         /// <param name="address">The address</param>
         /// <param name="ticker">The ticker, ie "tap".</param>
-        /// <returns>The list of transfer-inscribe objects</returns>
+        /// <returns>The amount of sends</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<long>?> GetAccountSentListLengthAsync(string address, string ticker);
+
+        /// <summary>
+        /// Get sent list based on address, ticker,offset and max value. Max value limit is 500.
+        /// Failed sends also show.
+        /// </summary>
+        /// <param name="address">The address</param>
+        /// <param name="ticker">The ticker, ie "tap".</param>
+        /// <param name="offset">The offset to start getting data from, ie 0</param>
+        /// <param name="max">The max amount of objects to get per request, ie 10. Limit is 500</param>
+        /// <returns>The send list</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<List<SendListResult>>?> GetAccountSentListAsync(string address, string ticker, int offset, int max);
+
+        /// <summary>
+        /// Get amount sent based on ticker
+        /// Failed sends also show.
+        /// </summary>
+        /// <param name="ticker">The ticker, ie "tap".</param>
+        /// <returns>The amount of sends</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<long>?> GetTickerSentListLengthAsync(string ticker);
     }
 }

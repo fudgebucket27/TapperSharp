@@ -100,6 +100,7 @@ namespace TapperSharp.Services
                 case "tickerTransferListLength":
                 case "transferListLength":
                 case "accountSentListLength":
+                case "tickerSentListLength":
                     HandleGenericResponse<long>(jsonResponse, jsonResponseBase.CallId);
                     break;          
                 case "holders":
@@ -123,8 +124,12 @@ namespace TapperSharp.Services
                 case "accountTransferList":
                     HandleGenericResponse<List<TransferListResult>>(jsonResponse, jsonResponseBase.CallId);
                     break;
+                case "accountSentList":
+                    HandleGenericResponse<List<SendListResult>>(jsonResponse, jsonResponseBase.CallId);
+                    break;
                 default:
                     Console.WriteLine("Unhandled function type: " + func);
+                    Console.WriteLine("Response: " + jsonResponse);
                     break;
             }
         }
@@ -555,6 +560,40 @@ namespace TapperSharp.Services
             {
                 Func = "accountSentListLength",
                 Args = new object[] { address, ticker },
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<long>;
+        }
+
+        public async Task<TapResponse<List<SendListResult>>?> GetAccountSentListAsync(string address, string ticker, int offset, int max)
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "accountSentList",
+                Args = new object[] { address, ticker, offset, max },
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<List<SendListResult>>;
+        }
+
+        public async Task<TapResponse<long>?> GetTickerSentListLengthAsync(string ticker)
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "tickerSentListLength",
+                Args = new object[] { ticker },
                 CallId = callId
             });
             var response = await completionSource.Task;
