@@ -30,31 +30,38 @@ namespace TapperTests
         }
 
         [TestMethod]
-        public async Task TestGetDeployment()
+        public async Task GetDeployment()
         {
             var result = await _tapperClient!.GetDeploymentAsync("tap");
             Assert.IsNotNull(result!.Result);
         }
 
         [TestMethod]
-        public async Task TestGetDeploymentsLength()
+        public async Task GetDeploymentsLength()
         {
             var result = await _tapperClient!.GetDeploymentsLengthAsync();
             Assert.AreNotEqual(0, result!.Result);
         }
 
         [TestMethod]
-        public async Task TestGetDeployments()
+        public async Task GetDeployments()
         {
             var result = await _tapperClient!.GetDeploymentsAsync(0,5);
             Assert.AreEqual(5, result!.Result!.Count);
         }
 
         [TestMethod]
-        public async Task TestGetMintTokensLeft()
+        public async Task GetMintTokensLeft()
         {
             var result = await _tapperClient!.GetMintTokensLeftAsync("tap");
             Assert.AreEqual("0", result!.Result!);
+        }
+
+        [TestMethod]
+        public async Task GetHoldersLength()
+        {
+            var result = await _tapperClient!.GetHoldersLengthAsync("tap");
+            Assert.AreNotEqual(0, result!.Result!);
         }
     }
 }

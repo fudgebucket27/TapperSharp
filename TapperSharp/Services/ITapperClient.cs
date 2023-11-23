@@ -43,5 +43,11 @@ namespace TapperSharp.Services
         /// <param name="ticker">The ticker, ie "tap"</param>
         /// <returns>The amount of tokens left to mint for the ticker</returns>
         Task<TapResponse<string>?> GetMintTokensLeftAsync(string ticker);
+        /// <summary>
+        /// Get the holders for the given ticker, it will also return holders that once owned but no longer hold
+        /// </summary>
+        /// <param name="ticker">The ticker, ie "tap"</param>
+        /// <returns>The amount of holders</returns>
+        Task<TapResponse<int>?> GetHoldersLengthAsync(string ticker);
     }
 }
