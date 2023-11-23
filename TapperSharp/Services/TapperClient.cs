@@ -73,141 +73,73 @@ namespace TapperSharp.Services
         /// Handles the response type from server. Use to set the completion sources concurrent dictionary
         /// </summary>
         /// <param name="func">The function</param>
-        /// <param name="jsonResponseGeneric">The json response from the server</param>
-        private void HandleResponseType(string func, string jsonResponseGeneric)
+        /// <param name="jsonResponse">The json response from the server</param>
+        private void HandleResponseType(string func, string jsonResponse)
         {
+            var jsonResponseBase = JsonSerializer.Deserialize<TapResponseBase>(jsonResponse);
+            if (jsonResponseBase == null || string.IsNullOrEmpty(jsonResponseBase.CallId))
+            {
+                // Handle error: Invalid response or missing CallId
+                return;
+            }
             switch (func)
             {
                 case "deployment":
-                    var deploymentResponse = JsonSerializer.Deserialize<TapResponse<DeploymentResult>>(jsonResponseGeneric);
-                    if (_responseCompletionSources.TryRemove(deploymentResponse!.CallId!, out var deploymentCompletionSource))
-                    {
-                        deploymentCompletionSource.TrySetResult(deploymentResponse);
-                    }
-                    break;
-                case "deploymentsLength":
-                    var deploymentsLengthResponse = JsonSerializer.Deserialize<TapResponse<long>>(jsonResponseGeneric);
-                    if (_responseCompletionSources.TryRemove(deploymentsLengthResponse!.CallId!, out var deploymentLengthCompletionSource))
-                    {
-                        deploymentLengthCompletionSource.TrySetResult(deploymentsLengthResponse);
-                    }
+                    HandleGenericResponse<DeploymentResult>(jsonResponse, jsonResponseBase.CallId);
                     break;
                 case "deployments":
-                    var deploymentsResponse = JsonSerializer.Deserialize<TapResponse<List<DeploymentResult>>>(jsonResponseGeneric);
-                    if (_responseCompletionSources.TryRemove(deploymentsResponse!.CallId!, out var deploymentsCompletionSource))
-                    {
-                        deploymentsCompletionSource.TrySetResult(deploymentsResponse);
-                    }
+                    HandleGenericResponse<List<DeploymentResult>>(jsonResponse, jsonResponseBase.CallId);
+                    break;
+                case "deploymentsLength":
+                case "holdersLength":
+                case "accountTokensLength":
+                case "accountMintListLength":
+                case "tickerMintListLength":
+                case "mintListLength":
+                case "accountTransferListLength":
+                    HandleGenericResponse<long>(jsonResponse, jsonResponseBase.CallId);
+                    break;          
+                case "holders":
+                    HandleGenericResponse<List<HoldersResult>>(jsonResponse, jsonResponseBase.CallId);
                     break;
                 case "mintTokensLeft":
-                    var mintTokensLeftResponse = JsonSerializer.Deserialize<TapResponse<string>>(jsonResponseGeneric);
-                    if (_responseCompletionSources.TryRemove(mintTokensLeftResponse!.CallId!, out var mintTokensLeftCompletionSource))
-                    {
-                        mintTokensLeftCompletionSource.TrySetResult(mintTokensLeftResponse);
-                    }
-                    break;
-                case "holdersLength":
-                    var holdersLengthResponse = JsonSerializer.Deserialize<TapResponse<long>>(jsonResponseGeneric);
-                    if (_responseCompletionSources.TryRemove(holdersLengthResponse!.CallId!, out var holdersLengthCompletionSource))
-                    {
-                        holdersLengthCompletionSource.TrySetResult(holdersLengthResponse);
-                    }
-                    break;
-                case "holders":
-                    var holdersResponse = JsonSerializer.Deserialize<TapResponse<List<HoldersResult>>>(jsonResponseGeneric);
-                    if (_responseCompletionSources.TryRemove(holdersResponse!.CallId!, out var holdersCompletionSource))
-                    {
-                        holdersCompletionSource.TrySetResult(holdersResponse);
-                    }
-                    break;
-                case "accountTokensLength":
-                    var accountTokensLengthResponse = JsonSerializer.Deserialize<TapResponse<long>>(jsonResponseGeneric);
-                    if (_responseCompletionSources.TryRemove(accountTokensLengthResponse!.CallId!, out var accountTokensLengthCompletionSource))
-                    {
-                        accountTokensLengthCompletionSource.TrySetResult(accountTokensLengthResponse);
-                    }
-                    break;
-                case "balance":
-                    var balanceResponse = JsonSerializer.Deserialize<TapResponse<string>>(jsonResponseGeneric);
-                    if (_responseCompletionSources.TryRemove(balanceResponse!.CallId!, out var balanceCompletionSource))
-                    {
-                        balanceCompletionSource.TrySetResult(balanceResponse);
-                    }
-                    break;
                 case "transferable":
-                    var transferableResponse = JsonSerializer.Deserialize<TapResponse<string>>(jsonResponseGeneric);
-                    if (_responseCompletionSources.TryRemove(transferableResponse!.CallId!, out var transferableCompletionSource))
-                    {
-                        transferableCompletionSource.TrySetResult(transferableResponse);
-                    }
+                case "balance":
+                    HandleGenericResponse<string>(jsonResponse, jsonResponseBase.CallId);
                     break;
                 case "accountTokens":
-                    var accountTokensResponse = JsonSerializer.Deserialize<TapResponse<List<string>>>(jsonResponseGeneric);
-                    if (_responseCompletionSources.TryRemove(accountTokensResponse!.CallId!, out var accountTokensCompletionSource))
-                    {
-                        accountTokensCompletionSource.TrySetResult(accountTokensResponse);
-                    }
-                    break;
-                case "accountMintListLength":
-                    var accountMintListLengthResponse = JsonSerializer.Deserialize<TapResponse<long>>(jsonResponseGeneric);
-                    if (_responseCompletionSources.TryRemove(accountMintListLengthResponse!.CallId!, out var accountMintListLengthCompletionSource))
-                    {
-                        accountMintListLengthCompletionSource.TrySetResult(accountMintListLengthResponse);
-                    }
-                    break;
+                    HandleGenericResponse<List<string>>(jsonResponse, jsonResponseBase.CallId);
+                    break;               
                 case "accountMintList":
-                    var accountMintListResponse = JsonSerializer.Deserialize<TapResponse<List<MintListResult>>>(jsonResponseGeneric);
-                    if (_responseCompletionSources.TryRemove(accountMintListResponse!.CallId!, out var accountMintListCompletionSource))
-                    {
-                        accountMintListCompletionSource.TrySetResult(accountMintListResponse);
-                    }
-                    break;
-                case "tickerMintListLength":
-                    var tickerMintListLengthResponse = JsonSerializer.Deserialize<TapResponse<long>>(jsonResponseGeneric);
-                    if (_responseCompletionSources.TryRemove(tickerMintListLengthResponse!.CallId!, out var tickerMintListLengthCompletionSource))
-                    {
-                        tickerMintListLengthCompletionSource.TrySetResult(tickerMintListLengthResponse);
-                    }
-                    break;
                 case "tickerMintList":
-                    var tickerMintListResponse = JsonSerializer.Deserialize<TapResponse<List<MintListResult>>>(jsonResponseGeneric);
-                    if (_responseCompletionSources.TryRemove(tickerMintListResponse!.CallId!, out var tickerMintListCompletionSource))
-                    {
-                        tickerMintListCompletionSource.TrySetResult(tickerMintListResponse);
-                    }
-                    break;
-                case "mintListLength":
-                    var mintListLengthResponse = JsonSerializer.Deserialize<TapResponse<long>>(jsonResponseGeneric);
-                    if (_responseCompletionSources.TryRemove(mintListLengthResponse!.CallId!, out var mintListLengthCompletionSource))
-                    {
-                        mintListLengthCompletionSource.TrySetResult(mintListLengthResponse);
-                    }
-                    break;
                 case "mintList":
-                    var mintListResponse = JsonSerializer.Deserialize<TapResponse<List<MintListResult>>>(jsonResponseGeneric);
-                    if (_responseCompletionSources.TryRemove(mintListResponse!.CallId!, out var mintListCompletionSource))
-                    {
-                        mintListCompletionSource.TrySetResult(mintListResponse);
-                    }
-                    break;
-                case "accountTransferListLength":
-                    var accountTransferListLengthResponse = JsonSerializer.Deserialize<TapResponse<long>>(jsonResponseGeneric);
-                    if (_responseCompletionSources.TryRemove(accountTransferListLengthResponse!.CallId!, out var accountTransferListLengthCompletionSource))
-                    {
-                        accountTransferListLengthCompletionSource.TrySetResult(accountTransferListLengthResponse);
-                    }
-                    break;
+                    HandleGenericResponse<List<MintListResult>>(jsonResponse, jsonResponseBase.CallId);
+                    break;  
                 case "transferList":
-                    var transferListResponse = JsonSerializer.Deserialize<TapResponse<List<TransferListResult>>>(jsonResponseGeneric);
-                    if (_responseCompletionSources.TryRemove(transferListResponse!.CallId!, out var transferListCompletionSource))
-                    {
-                        transferListCompletionSource.TrySetResult(transferListResponse);
-                    }
+                    HandleGenericResponse<List<TransferListResult>>(jsonResponse, jsonResponseBase.CallId);
                     break;
-
                 default:
-                    Console.WriteLine("Not valid!");
+                    Console.WriteLine("Unhandled function type: " + func);
                     break;
+            }
+        }
+
+        /// <summary>
+        /// Handles the generic response and sets the completion soruce
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="jsonResponse"></param>
+        /// <param name="callId"></param>
+        private void HandleGenericResponse<T>(string jsonResponse, string callId)
+        {
+            var response = JsonSerializer.Deserialize<TapResponse<T>>(jsonResponse);
+            if (response != null && _responseCompletionSources.TryRemove(callId, out var completionSource))
+            {
+                completionSource.TrySetResult(response);
+            }
+            else
+            {
+                // TO DO: Handle the case where deserialization fails or callId is not found
             }
         }
 

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace TapperSharp.Models
 {
+    /// <summary>
+    /// The command use
+    /// </summary>
     public class Cmd
     {
         /// <summary>

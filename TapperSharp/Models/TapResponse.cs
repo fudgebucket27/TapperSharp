@@ -229,12 +229,12 @@ namespace TapperSharp.Models
         /// The ticker
         /// </summary>
         [JsonPropertyName("tick")]
-        public string Tick { get; set; }
+        public string? Tick { get; set; }
         /// <summary>
         /// The address
         /// </summary>
         [JsonPropertyName("addr")]
-        public string Addr { get; set; }
+        public string? Addr { get; set; }
         /// <summary>
         /// The block
         /// </summary>
