@@ -274,5 +274,15 @@ namespace TapperSharp.Services
         /// <returns>The send list</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<List<SendListResult>>?> GetSentListAsync(int offset, int max);
+
+        /// <summary>
+        /// Get amount of tokens ever recieved based on address and ticker
+        /// Failed recieved also show.
+        /// </summary>
+        /// <param name="address">The address</param>
+        /// <param name="ticker">The ticker</param>
+        /// <returns>The amount of tokens recieved</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<long>?> GetAccountReceiveListLengthAsync(string address, string ticker);
     }
 }
