@@ -34,7 +34,7 @@ namespace TapperSharp.Services
         /// </summary>
         /// <returns>The amount of deployments on the network</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
-        Task<TapResponse<int>?> GetDeploymentsLengthAsync();
+        Task<TapResponse<long>?> GetDeploymentsLengthAsync();
 
         /// <summary>
         /// Get deployments based on an offset and max value. Max value limit is 500
@@ -59,7 +59,7 @@ namespace TapperSharp.Services
         /// <param name="ticker">The ticker, ie "tap"</param>
         /// <returns>The amount of holders</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
-        Task<TapResponse<int>?> GetHoldersLengthAsync(string ticker);
+        Task<TapResponse<long>?> GetHoldersLengthAsync(string ticker);
 
         /// <summary>
         /// Get holders based on a ticker, offset and max value. Max value limit is 500
@@ -77,7 +77,7 @@ namespace TapperSharp.Services
         /// <param name="address">The address</param>
         /// <returns>The amount of account tokens owned by the address</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
-        Task<TapResponse<int>?> GetAccountTokensLengthAsync(string address);
+        Task<TapResponse<long>?> GetAccountTokensLengthAsync(string address);
 
 
         /// <summary>
@@ -139,5 +139,13 @@ namespace TapperSharp.Services
         /// <returns>The list of mints for the ticker</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<List<MintListResult>>?> GetTickerMintListAsync(string ticker, int offset, int max);
+
+        /// <summary>
+        /// Get amount of mints ever performed. Includes mints that failed
+        /// Failed mints also show.
+        /// </summary>
+        /// <returns>The amount of mints ever performed</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<long>?> GetMintListLengthAsync();
     }
 }

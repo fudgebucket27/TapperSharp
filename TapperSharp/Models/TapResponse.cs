@@ -107,7 +107,7 @@ namespace TapperSharp.Models
         /// The block
         /// </summary>
         [JsonPropertyName("blck")]
-        public int Blck { get; set; }
+        public long Blck { get; set; }
 
         /// <summary>
         /// The transaction

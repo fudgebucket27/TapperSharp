@@ -86,7 +86,7 @@ namespace TapperSharp.Services
                     }
                     break;
                 case "deploymentsLength":
-                    var deploymentsLengthResponse = JsonSerializer.Deserialize<TapResponse<int>>(jsonResponseGeneric);
+                    var deploymentsLengthResponse = JsonSerializer.Deserialize<TapResponse<long>>(jsonResponseGeneric);
                     if (_responseCompletionSources.TryRemove(deploymentsLengthResponse!.CallId!, out var deploymentLengthCompletionSource))
                     {
                         deploymentLengthCompletionSource.TrySetResult(deploymentsLengthResponse);
@@ -107,7 +107,7 @@ namespace TapperSharp.Services
                     }
                     break;
                 case "holdersLength":
-                    var holdersLengthResponse = JsonSerializer.Deserialize<TapResponse<int>>(jsonResponseGeneric);
+                    var holdersLengthResponse = JsonSerializer.Deserialize<TapResponse<long>>(jsonResponseGeneric);
                     if (_responseCompletionSources.TryRemove(holdersLengthResponse!.CallId!, out var holdersLengthCompletionSource))
                     {
                         holdersLengthCompletionSource.TrySetResult(holdersLengthResponse);
@@ -121,7 +121,7 @@ namespace TapperSharp.Services
                     }
                     break;
                 case "accountTokensLength":
-                    var accountTokensLengthResponse = JsonSerializer.Deserialize<TapResponse<int>>(jsonResponseGeneric);
+                    var accountTokensLengthResponse = JsonSerializer.Deserialize<TapResponse<long>>(jsonResponseGeneric);
                     if (_responseCompletionSources.TryRemove(accountTokensLengthResponse!.CallId!, out var accountTokensLengthCompletionSource))
                     {
                         accountTokensLengthCompletionSource.TrySetResult(accountTokensLengthResponse);
@@ -176,6 +176,13 @@ namespace TapperSharp.Services
                         tickerMintListCompletionSource.TrySetResult(tickerMintListResponse);
                     }
                     break;
+                case "mintListLength":
+                    var mintListLengthResponse = JsonSerializer.Deserialize<TapResponse<long>>(jsonResponseGeneric);
+                    if (_responseCompletionSources.TryRemove(mintListLengthResponse!.CallId!, out var mintListLengthCompletionSource))
+                    {
+                        mintListLengthCompletionSource.TrySetResult(mintListLengthResponse);
+                    }
+                    break;
                 default:
                     Console.WriteLine("Not valid!");
                     break;
@@ -201,7 +208,7 @@ namespace TapperSharp.Services
         }
 
         /// <inheritdoc/>
-        public async Task<TapResponse<int>?> GetDeploymentsLengthAsync()
+        public async Task<TapResponse<long>?> GetDeploymentsLengthAsync()
         {
             var callId = Guid.NewGuid().ToString();
 
@@ -215,7 +222,7 @@ namespace TapperSharp.Services
                 CallId = callId
             });
             var response = await completionSource.Task;
-            return response as TapResponse<int>;
+            return response as TapResponse<long>;
         }
 
         /// <inheritdoc/>
@@ -255,7 +262,7 @@ namespace TapperSharp.Services
         }
 
         /// <inheritdoc/>
-        public async Task<TapResponse<int>?> GetHoldersLengthAsync(string ticker)
+        public async Task<TapResponse<long>?> GetHoldersLengthAsync(string ticker)
         {
             var callId = Guid.NewGuid().ToString();
 
@@ -269,7 +276,7 @@ namespace TapperSharp.Services
                 CallId = callId
             });
             var response = await completionSource.Task;
-            return response as TapResponse<int>;
+            return response as TapResponse<long>;
         }
 
         /// <inheritdoc/>
@@ -291,7 +298,7 @@ namespace TapperSharp.Services
         }
 
         /// <inheritdoc/>
-        public async Task<TapResponse<int>?> GetAccountTokensLengthAsync(string address)
+        public async Task<TapResponse<long>?> GetAccountTokensLengthAsync(string address)
         {
             var callId = Guid.NewGuid().ToString();
 
@@ -305,7 +312,7 @@ namespace TapperSharp.Services
                 CallId = callId
             });
             var response = await completionSource.Task;
-            return response as TapResponse<int>;
+            return response as TapResponse<long>;
         }
 
         /// <inheritdoc/>
@@ -431,6 +438,23 @@ namespace TapperSharp.Services
             });
             var response = await completionSource.Task;
             return response as TapResponse<List<MintListResult>>;
+        }
+
+        public async Task<TapResponse<long>?> GetMintListLengthAsync()
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "mintListLength",
+                Args = new string[0],
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<long>;
         }
     }
 }
