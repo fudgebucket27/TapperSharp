@@ -145,6 +145,10 @@ namespace TapperSharp.Models
         [JsonPropertyName("crsd")]
         public bool Crsd { get; set; }
     }
+
+    /// <summary>
+    /// The holders result for a ticker
+    /// </summary>
     public class HoldersResult
     {
         /// <summary>

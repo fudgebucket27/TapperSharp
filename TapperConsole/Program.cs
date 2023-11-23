@@ -28,6 +28,8 @@ namespace TapperConsole
             Console.WriteLine(JsonSerializer.Serialize(accountTokensLength, new JsonSerializerOptions() { WriteIndented = true }));
             var balance = await tapperClient.GetBalanceAsync(holders!.Result[0]!.Address!, "tap");
             Console.WriteLine(JsonSerializer.Serialize(balance, new JsonSerializerOptions() { WriteIndented = true }));
+            var transferable = await tapperClient.GetTransferableAsync(holders!.Result[0]!.Address!, "tap");
+            Console.WriteLine(JsonSerializer.Serialize(transferable, new JsonSerializerOptions() { WriteIndented = true }));
 
             //var holdersLength = await tapperClient.GetHoldersLengthAsync("tap");
             //Console.WriteLine(JsonSerializer.Serialize(holdersLength, new JsonSerializerOptions() { WriteIndented = true }));

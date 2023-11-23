@@ -127,6 +127,13 @@ namespace TapperSharp.Services
                         balanceCompletionSource.TrySetResult(balanceResponse);
                     }
                     break;
+                case "transferable":
+                    var transferableResponse = JsonSerializer.Deserialize<TapResponse<string>>(jsonResponseGeneric);
+                    if (_responseCompletionSources.TryRemove(transferableResponse!.CallId!, out var transferableCompletionSource))
+                    {
+                        transferableCompletionSource.TrySetResult(transferableResponse);
+                    }
+                    break;
                 default:
                     Console.WriteLine("Not valid!");
                     break;
@@ -270,6 +277,24 @@ namespace TapperSharp.Services
             await _client.EmitAsync("get", new TapRequest()
             {
                 Func = "balance",
+                Args = new[] { address, ticker },
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<string>;
+        }
+
+        /// <inheritdoc/>
+        public async Task<TapResponse<string>?> GetTransferableAsync(string address, string ticker)
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "transferable",
                 Args = new[] { address, ticker },
                 CallId = callId
             });
