@@ -237,5 +237,21 @@ namespace TapperTests
             Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
             Assert.IsTrue(result!.Result!.Count > 0);
         }
+
+        [TestMethod]
+        public async Task GetSentListLength()
+        {
+            var result = await _tapperClient!.GetSentListLengthAsync();
+            Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
+            Assert.IsTrue(result!.Result! > 0);
+        }
+
+        [TestMethod]
+        public async Task GetSentList()
+        {
+            var result = await _tapperClient!.GetSentListAsync(0, 10);
+            Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
+            Assert.IsTrue(result!.Result!.Count > 0);
+        }
     }
 }

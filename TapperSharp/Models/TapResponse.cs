@@ -174,6 +174,12 @@ namespace TapperSharp.Models
     public class MintListResult
     {
         /// <summary>
+        /// The ticker
+        /// </summary>
+        [JsonPropertyName("tick")]
+        public string? Tick { get; set; }
+
+        /// <summary>
         /// The address
         /// </summary>
         [JsonPropertyName("addr")]
@@ -292,6 +298,9 @@ namespace TapperSharp.Models
     /// </summary>
     public class SendListResult
     {
+        [JsonPropertyName("tick")]
+        public string? Tick { get; set; }
+
         /// <summary>
         /// The address
         /// </summary>

@@ -23,8 +23,12 @@ namespace TapperConsole
             {
                 await tapperClient.ConnectAsync();
 
-                var tickerSentList = await tapperClient.GetTickerSentListAsync("-tap", 0 , 10);
+
+                var tickerSentList = await tapperClient.GetSentListAsync(0, 10);
                 Console.WriteLine(JsonSerializer.Serialize(tickerSentList, new JsonSerializerOptions() { WriteIndented = true }));
+
+                //var tickerSentList = await tapperClient.GetTickerSentListAsync("-tap", 0 , 10);
+                //Console.WriteLine(JsonSerializer.Serialize(tickerSentList, new JsonSerializerOptions() { WriteIndented = true }));
 
                 //var tickerSentListLength = await tapperClient.GetTickerSentListLengthAsync("-tap");
                 //Console.WriteLine(JsonSerializer.Serialize(tickerSentListLength, new JsonSerializerOptions() { WriteIndented = true }));

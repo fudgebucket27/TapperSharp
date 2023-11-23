@@ -257,5 +257,22 @@ namespace TapperSharp.Services
         /// <returns>The send list</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<List<SendListResult>>?> GetTickerSentListAsync(string ticker, int offset, int max);
+
+        /// <summary>
+        /// Get amount of sends ever performed. Includes failed
+        /// </summary>
+        /// <returns>The amount of sends ever performed</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<long>?> GetSentListLengthAsync();
+
+        /// <summary>
+        /// Get sent list based on offset and max value. Max value limit is 500.
+        /// Failed sends also show.
+        /// </summary>
+        /// <param name="offset">The offset to start getting data from, ie 0</param>
+        /// <param name="max">The max amount of objects to get per request, ie 10. Limit is 500</param>
+        /// <returns>The send list</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<List<SendListResult>>?> GetSentListAsync(int offset, int max);
     }
 }

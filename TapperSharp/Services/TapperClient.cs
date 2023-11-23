@@ -101,6 +101,7 @@ namespace TapperSharp.Services
                 case "transferListLength":
                 case "accountSentListLength":
                 case "tickerSentListLength":
+                case "sentListLength":
                     HandleGenericResponse<long>(jsonResponse, jsonResponseBase.CallId);
                     break;          
                 case "holders":
@@ -126,6 +127,7 @@ namespace TapperSharp.Services
                     break;
                 case "accountSentList":
                 case "tickerSentList":
+                case "sentList":
                     HandleGenericResponse<List<SendListResult>>(jsonResponse, jsonResponseBase.CallId);
                     break;
                 default:
@@ -612,6 +614,40 @@ namespace TapperSharp.Services
             {
                 Func = "tickerSentList",
                 Args = new object[] { ticker, offset, max },
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<List<SendListResult>>;
+        }
+
+        public async Task<TapResponse<long>?> GetSentListLengthAsync()
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "sentListLength",
+                Args = new string[0],
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<long>;
+        }
+
+        public async Task<TapResponse<List<SendListResult>>?> GetSentListAsync(int offset, int max)
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "sentList",
+                Args = new object[] { offset, max },
                 CallId = callId
             });
             var response = await completionSource.Task;
