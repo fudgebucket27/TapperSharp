@@ -70,5 +70,12 @@ namespace TapperTests
             var result = await _tapperClient!.GetHoldersAsync("tap", 0, 10);
             Assert.AreNotEqual(0, result!.Result!.Count);
         }
+
+        [TestMethod]
+        public async Task GetAccountTokensLength()
+        {
+            var result = await _tapperClient!.GetAccountTokensLengthAsync("bc1paq960e3drpdwddfxh5kcgq48qa5yxeqsty9zez6w2c6mxr5fecrqp0syg0");
+            Assert.AreNotEqual(0, result!.Result!);
+        }
     }
 }

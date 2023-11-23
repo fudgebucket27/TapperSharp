@@ -14,22 +14,26 @@ namespace TapperSharp.Services
         /// </summary>
         /// <returns></returns>
         Task ConnectAsync();
+
         /// <summary>
         /// Disconnect from TAP endpoint
         /// </summary>
         /// <returns></returns>
         Task DisconnectAsync();
+
         /// <summary>
         /// Get deployment of ticker passed in
         /// </summary>
         /// <param name="ticker">The ticker, ie "tap"</param>
         /// <returns>The deployment result for the ticker</returns>
         Task<TapResponse<DeploymentResult>?> GetDeploymentAsync(string ticker);
+
         /// <summary>
         /// Get the amount of deployments
         /// </summary>
         /// <returns>The amount of deployments on the network</returns>
         Task<TapResponse<int>?> GetDeploymentsLengthAsync();
+
         /// <summary>
         /// Get deployments based on an offset and max value. Max value limit is 500
         /// </summary>
@@ -37,25 +41,35 @@ namespace TapperSharp.Services
         /// <param name="max">The max amount of deployments to get per request, ie 10. Limit is 500</param>
         /// <returns>The deployments</returns>
         Task<TapResponse<List<DeploymentResult>>?> GetDeploymentsAsync(int offset, int max);
+
         /// <summary>
         /// Get the amount of tokens left to mint for a ticker
         /// </summary>
         /// <param name="ticker">The ticker, ie "tap"</param>
         /// <returns>The amount of tokens left to mint for the ticker</returns>
         Task<TapResponse<string>?> GetMintTokensLeftAsync(string ticker);
+
         /// <summary>
         /// Get the holders for the given ticker, it will also return holders that once owned but no longer hold
         /// </summary>
         /// <param name="ticker">The ticker, ie "tap"</param>
         /// <returns>The amount of holders</returns>
         Task<TapResponse<int>?> GetHoldersLengthAsync(string ticker);
+
         /// <summary>
         /// Get holders based on a ticker, offset and max value. Max value limit is 500
         /// </summary>
         /// <param name="ticker">The ticker, ie "tap"</param>
         /// <param name="offset">The offset to start getting deployments from, ie 0</param>
         /// <param name="max">The max amount of deployments to get per request, ie 10. Limit is 500</param>
-        /// <returns>The deployments</returns>
+        /// <returns>The holders</returns>
         Task<TapResponse<List<HoldersResult>>?> GetHoldersAsync(string ticker, int offset, int max);
+
+        /// <summary>
+        /// Get the amount of tokens held for the given address, it will also return tokens that the address once owned but no longer hold
+        /// </summary>
+        /// <param name="ticker">The ticker, ie "tap"</param>
+        /// <returns>The amount of account tokens owned by the address</returns>
+        Task<TapResponse<int>?> GetAccountTokensLengthAsync(string address);
     }
 }

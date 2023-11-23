@@ -80,9 +80,9 @@ namespace TapperSharp.Services
                     break;
                 case "deploymentsLength":
                     var deploymentsLengthResponse = JsonSerializer.Deserialize<TapResponse<int>>(jsonResponseGeneric);
-                    if (_responseCompletionSources.TryRemove(deploymentsLengthResponse!.CallId!, out var deploymentLengthsCompletionSource))
+                    if (_responseCompletionSources.TryRemove(deploymentsLengthResponse!.CallId!, out var deploymentLengthCompletionSource))
                     {
-                        deploymentLengthsCompletionSource.TrySetResult(deploymentsLengthResponse);
+                        deploymentLengthCompletionSource.TrySetResult(deploymentsLengthResponse);
                     }
                     break;
                 case "deployments":
@@ -101,9 +101,9 @@ namespace TapperSharp.Services
                     break;
                 case "holdersLength":
                     var holdersLengthResponse = JsonSerializer.Deserialize<TapResponse<int>>(jsonResponseGeneric);
-                    if (_responseCompletionSources.TryRemove(holdersLengthResponse!.CallId!, out var holdersLengthsCompletionSource))
+                    if (_responseCompletionSources.TryRemove(holdersLengthResponse!.CallId!, out var holdersLengthCompletionSource))
                     {
-                        holdersLengthsCompletionSource.TrySetResult(holdersLengthResponse);
+                        holdersLengthCompletionSource.TrySetResult(holdersLengthResponse);
                     }
                     break;
                 case "holders":
@@ -111,6 +111,13 @@ namespace TapperSharp.Services
                     if (_responseCompletionSources.TryRemove(holdersResponse!.CallId!, out var holdersCompletionSource))
                     {
                         holdersCompletionSource.TrySetResult(holdersResponse);
+                    }
+                    break;
+                case "accountTokensLength":
+                    var accountTokensLengthResponse = JsonSerializer.Deserialize<TapResponse<int>>(jsonResponseGeneric);
+                    if (_responseCompletionSources.TryRemove(accountTokensLengthResponse!.CallId!, out var accountTokensLengthCompletionSource))
+                    {
+                        accountTokensLengthCompletionSource.TrySetResult(accountTokensLengthResponse);
                     }
                     break;
                 default:
@@ -225,6 +232,24 @@ namespace TapperSharp.Services
             });
             var response = await completionSource.Task;
             return response as TapResponse<List<HoldersResult>>;
+        }
+
+        /// <inheritdoc/>
+        public async Task<TapResponse<int>?> GetAccountTokensLengthAsync(string address)
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "accountTokensLength",
+                Args = new[] { address },
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<int>;
         }
     }
 }
