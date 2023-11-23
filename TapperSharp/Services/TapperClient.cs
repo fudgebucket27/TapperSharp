@@ -161,6 +161,13 @@ namespace TapperSharp.Services
                         accountMintListCompletionSource.TrySetResult(accountMintListResponse);
                     }
                     break;
+                case "tickerMintListLength":
+                    var tickerMintListLengthResponse = JsonSerializer.Deserialize<TapResponse<long>>(jsonResponseGeneric);
+                    if (_responseCompletionSources.TryRemove(tickerMintListLengthResponse!.CallId!, out var tickerMintListLengthCompletionSource))
+                    {
+                        tickerMintListLengthCompletionSource.TrySetResult(tickerMintListLengthResponse);
+                    }
+                    break;
                 default:
                     Console.WriteLine("Not valid!");
                     break;
@@ -381,6 +388,24 @@ namespace TapperSharp.Services
             });
             var response = await completionSource.Task;
             return response as TapResponse<List<AccountMintListResult>>;
+        }
+
+        /// <inheritdoc/>
+        public async Task<TapResponse<long>?> GetTickerMintListLengthAsync(string ticker)
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "tickerMintListLength",
+                Args = new object[] { ticker },
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<long>;
         }
     }
 }

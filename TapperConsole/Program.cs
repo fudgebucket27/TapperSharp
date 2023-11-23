@@ -23,6 +23,9 @@ namespace TapperConsole
             {
                 await tapperClient.ConnectAsync();
 
+                var ticketMintListLength = await tapperClient.GetTickerMintListLengthAsync("tap");
+                Console.WriteLine(JsonSerializer.Serialize(ticketMintListLength, new JsonSerializerOptions() { WriteIndented = true }));
+                //var accountTokensLength = await tapperClient.GetAccountTokensLengthAsync(holders!.Result![0]!.Address!);
                 //var holders = await tapperClient.GetHoldersAsync("tap", 0, 10);
                 //Console.WriteLine(JsonSerializer.Serialize(holders, new JsonSerializerOptions() { WriteIndented = true }));
                 //var accountTokensLength = await tapperClient.GetAccountTokensLengthAsync(holders!.Result![0]!.Address!);

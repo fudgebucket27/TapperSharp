@@ -120,5 +120,13 @@ namespace TapperSharp.Services
         /// <returns>The list of mints for the ticker</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<List<AccountMintListResult>>?> GetAccountMintListAsync(string address, string ticker, int offset, int max);
+
+        /// <summary>
+        /// Get the amount of mints for a ticker. Inlcudes mints that failed.
+        /// </summary>
+        /// <param name="ticker">The ticker, ie "tap"</param>
+        /// <returns>The amount of mints ever performed for the ticker</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<long>?> GetTickerMintListLengthAsync(string ticker);
     }
 }
