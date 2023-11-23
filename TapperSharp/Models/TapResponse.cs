@@ -169,9 +169,9 @@ namespace TapperSharp.Models
     }
 
     /// <summary>
-    /// The account mint list result
+    /// The mint list result
     /// </summary>
-    public class AccountMintListResult
+    public class MintListResult
     {
         /// <summary>
         /// The address

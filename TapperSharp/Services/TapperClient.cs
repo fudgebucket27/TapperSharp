@@ -3,6 +3,7 @@
 using SocketIO;
 using SocketIOClient;
 using System.Collections.Concurrent;
+using System.Net;
 using System.Text.Json;
 using TapperSharp.Models;
 
@@ -155,7 +156,7 @@ namespace TapperSharp.Services
                     }
                     break;
                 case "accountMintList":
-                    var accountMintListResponse = JsonSerializer.Deserialize<TapResponse<List<AccountMintListResult>>>(jsonResponseGeneric);
+                    var accountMintListResponse = JsonSerializer.Deserialize<TapResponse<List<MintListResult>>>(jsonResponseGeneric);
                     if (_responseCompletionSources.TryRemove(accountMintListResponse!.CallId!, out var accountMintListCompletionSource))
                     {
                         accountMintListCompletionSource.TrySetResult(accountMintListResponse);
@@ -166,6 +167,13 @@ namespace TapperSharp.Services
                     if (_responseCompletionSources.TryRemove(tickerMintListLengthResponse!.CallId!, out var tickerMintListLengthCompletionSource))
                     {
                         tickerMintListLengthCompletionSource.TrySetResult(tickerMintListLengthResponse);
+                    }
+                    break;
+                case "tickerMintList":
+                    var tickerMintListResponse = JsonSerializer.Deserialize<TapResponse<List<MintListResult>>>(jsonResponseGeneric);
+                    if (_responseCompletionSources.TryRemove(tickerMintListResponse!.CallId!, out var tickerMintListCompletionSource))
+                    {
+                        tickerMintListCompletionSource.TrySetResult(tickerMintListResponse);
                     }
                     break;
                 default:
@@ -373,7 +381,7 @@ namespace TapperSharp.Services
         }
 
         /// <inheritdoc/>
-        public async Task<TapResponse<List<AccountMintListResult>>?> GetAccountMintListAsync(string address, string ticker, int offset, int max)
+        public async Task<TapResponse<List<MintListResult>>?> GetAccountMintListAsync(string address, string ticker, int offset, int max)
         {
             var callId = Guid.NewGuid().ToString();
 
@@ -387,7 +395,7 @@ namespace TapperSharp.Services
                 CallId = callId
             });
             var response = await completionSource.Task;
-            return response as TapResponse<List<AccountMintListResult>>;
+            return response as TapResponse<List<MintListResult>>;
         }
 
         /// <inheritdoc/>
@@ -406,6 +414,23 @@ namespace TapperSharp.Services
             });
             var response = await completionSource.Task;
             return response as TapResponse<long>;
+        }
+
+        public async Task<TapResponse<List<MintListResult>>?> GetTickerMintListAsync(string ticker, int offset, int max)
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "tickerMintList",
+                Args = new object[] { ticker, offset, max },
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<List<MintListResult>>;
         }
     }
 }

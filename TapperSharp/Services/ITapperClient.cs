@@ -119,7 +119,7 @@ namespace TapperSharp.Services
         /// <param name="max">The max amount of mint objects to get per request, ie 10. Limit is 500</param>
         /// <returns>The list of mints for the ticker</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
-        Task<TapResponse<List<AccountMintListResult>>?> GetAccountMintListAsync(string address, string ticker, int offset, int max);
+        Task<TapResponse<List<MintListResult>>?> GetAccountMintListAsync(string address, string ticker, int offset, int max);
 
         /// <summary>
         /// Get the amount of mints for a ticker. Inlcudes mints that failed.
@@ -128,5 +128,16 @@ namespace TapperSharp.Services
         /// <returns>The amount of mints ever performed for the ticker</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<long>?> GetTickerMintListLengthAsync(string ticker);
+
+        /// <summary>
+        /// Get mints for a ticker based on it's ticker and offset and max value. Max value limit is 500.
+        /// Failed mints also show.
+        /// </summary>
+        /// <param name="ticker">The ticker, ie "tap"<</param>
+        /// <param name="offset">The offset to start getting data from, ie 0</param>
+        /// <param name="max">The max amount of mint objects to get per request, ie 10. Limit is 500</param>
+        /// <returns>The list of mints for the ticker</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<List<MintListResult>>?> GetTickerMintListAsync(string ticker, int offset, int max);
     }
 }
