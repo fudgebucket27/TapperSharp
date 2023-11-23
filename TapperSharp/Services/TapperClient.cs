@@ -131,6 +131,9 @@ namespace TapperSharp.Services
                 case "sentList":
                     HandleGenericResponse<List<SendListResult>>(jsonResponse, jsonResponseBase.CallId);
                     break;
+                case "accountReceiveList":
+                    HandleGenericResponse<List<AccountRecieveListResult>>(jsonResponse, jsonResponseBase.CallId);
+                    break;
                 default:
                     Console.WriteLine("Unhandled function type: " + func);
                     Console.WriteLine("Response: " + jsonResponse);
@@ -670,6 +673,23 @@ namespace TapperSharp.Services
             });
             var response = await completionSource.Task;
             return response as TapResponse<long>;
+        }
+
+        public async Task<TapResponse<List<AccountRecieveListResult>>?> GetAccountReceiveListAsync(string address, string ticker, int offset, int max)
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "accountReceiveList",
+                Args = new object[] { address, ticker, offset, max },
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<List<AccountRecieveListResult>>;
         }
     }
 }

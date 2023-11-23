@@ -284,5 +284,17 @@ namespace TapperSharp.Services
         /// <returns>The amount of tokens recieved</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<long>?> GetAccountReceiveListLengthAsync(string address, string ticker);
+
+        /// <summary>
+        /// Get tokens recieved based on address, ticker,offset and max value. Max value limit is 500.
+        /// Failed recieved also show.
+        /// </summary>
+        /// <param name="address">The address</param>
+        /// <param name="ticker">The ticker</param>
+        /// <param name="offset">The offset to start getting data from, ie 0</param>
+        /// <param name="max">The max amount of objects to get per request, ie 10. Limit is 500</param>
+        /// <returns>The tokens recieved</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<List<AccountRecieveListResult>>?> GetAccountReceiveListAsync(string address, string ticker, int offset, int max);
     }
 }
