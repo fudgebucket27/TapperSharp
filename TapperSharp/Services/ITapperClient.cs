@@ -170,12 +170,23 @@ namespace TapperSharp.Services
 
         /// <summary>
         /// Get transfer list based on a offset and max value. Max value limit is 500.
-        /// Failed mints also show.
+        /// Failed transfers also show.
         /// </summary>
         /// <param name="offset">The offset to start getting data from, ie 0</param>
         /// <param name="max">The max amount of objects to get per request, ie 10. Limit is 500</param>
         /// <returns>The list of transfer-inscribe objects</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<List<TransferListResult>>?> GetTransferListAsync(int offset, int max);
+
+        /// <summary>
+        /// Get transfer list based on a ticker, offset and max value. Max value limit is 500.
+        /// Failed transfer also show.
+        /// </summary>
+        /// <param name="ticker">The ticker ie, "tap"</param>
+        /// <param name="offset">The offset to start getting data from, ie 0</param>
+        /// <param name="max">The max amount of objects to get per request, ie 10. Limit is 500</param>
+        /// <returns>The list of transfer-inscribe objects</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<List<TransferListResult>>?> GetTickerTransferListAsync(string ticker, int offset, int max);
     }
 }

@@ -116,6 +116,7 @@ namespace TapperSharp.Services
                     HandleGenericResponse<List<MintListResult>>(jsonResponse, jsonResponseBase.CallId);
                     break;  
                 case "transferList":
+                case "tickerTransferList":
                     HandleGenericResponse<List<TransferListResult>>(jsonResponse, jsonResponseBase.CallId);
                     break;
                 default:
@@ -461,6 +462,23 @@ namespace TapperSharp.Services
             {
                 Func = "transferList",
                 Args = new object[] { offset, max },
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<List<TransferListResult>>;
+        }
+
+        public async Task<TapResponse<List<TransferListResult>>?> GetTickerTransferListAsync(string ticker, int offset, int max)
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "tickerTransferList",
+                Args = new object[] { ticker, offset, max },
                 CallId = callId
             });
             var response = await completionSource.Task;
