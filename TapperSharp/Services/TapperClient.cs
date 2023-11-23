@@ -134,6 +134,13 @@ namespace TapperSharp.Services
                         transferableCompletionSource.TrySetResult(transferableResponse);
                     }
                     break;
+                case "accountTokens":
+                    var accountTokensResponse = JsonSerializer.Deserialize<TapResponse<List<string>>>(jsonResponseGeneric);
+                    if (_responseCompletionSources.TryRemove(accountTokensResponse!.CallId!, out var accountTokensCompletionSource))
+                    {
+                        accountTokensCompletionSource.TrySetResult(accountTokensResponse);
+                    }
+                    break;
                 default:
                     Console.WriteLine("Not valid!");
                     break;
@@ -300,6 +307,24 @@ namespace TapperSharp.Services
             });
             var response = await completionSource.Task;
             return response as TapResponse<string>;
+        }
+
+        /// <inheritdoc/>
+        public async Task<TapResponse<List<string>>?> GetAccountTokensAsync(string address, int offset, int max)
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "accountTokens",
+                Args = new object[] { address, offset, max },
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<List<string>>;
         }
     }
 }

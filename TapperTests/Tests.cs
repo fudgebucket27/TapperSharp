@@ -101,5 +101,13 @@ namespace TapperTests
             Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
             Assert.IsTrue(result!.Result is null || result.Result is string);
         }
+
+        [TestMethod]
+        public async Task GetAccountTokens()
+        {
+            var result = await _tapperClient!.GetAccountTokensAsync("bc1paq960e3drpdwddfxh5kcgq48qa5yxeqsty9zez6w2c6mxr5fecrqp0syg0", 0,10);
+            Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
+            Assert.AreNotEqual(0, result!.Result!.Count);
+        }
     }
 }

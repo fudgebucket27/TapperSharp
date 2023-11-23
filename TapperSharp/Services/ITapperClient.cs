@@ -60,7 +60,7 @@ namespace TapperSharp.Services
         /// Get holders based on a ticker, offset and max value. Max value limit is 500
         /// </summary>
         /// <param name="ticker">The ticker, ie "tap"</param>
-        /// <param name="offset">The offset to start getting deployments from, ie 0</param>
+        /// <param name="offset">The offset to start getting holders from, ie 0</param>
         /// <param name="max">The max amount of deployments to get per request, ie 10. Limit is 500</param>
         /// <returns>The holders</returns>
         Task<TapResponse<List<HoldersResult>>?> GetHoldersAsync(string ticker, int offset, int max);
@@ -80,5 +80,15 @@ namespace TapperSharp.Services
         /// <param name="ticker">The ticker, ie "tap"</param>
         /// <returns>The balance in big integer format</returns>
         Task<TapResponse<string>?> GetBalanceAsync(string address, string ticker);
+
+        /// <summary>
+        /// Get account tokens based on a address, offset and max value. Max value limit is 500.
+        /// Tokens once owned but no longer held are also returned.
+        /// </summary>
+        /// <param name="address">The address</param>
+        /// <param name="offset">The offset to start getting tokens from, ie 0</param>
+        /// <param name="max">The max amount of deployments to get per request, ie 10. Limit is 500</param>
+        /// <returns>A list of tickers the address holds/held</returns>
+        Task<TapResponse<List<string>>?> GetAccountTokensAsync(string address, int offset, int max);
     }
 }
