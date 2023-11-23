@@ -26,12 +26,14 @@ namespace TapperSharp.Services
         /// </summary>
         /// <param name="ticker">The ticker, ie "tap"</param>
         /// <returns>The deployment result for the ticker</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<DeploymentResult>?> GetDeploymentAsync(string ticker);
 
         /// <summary>
         /// Get the amount of deployments
         /// </summary>
         /// <returns>The amount of deployments on the network</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<int>?> GetDeploymentsLengthAsync();
 
         /// <summary>
@@ -40,6 +42,7 @@ namespace TapperSharp.Services
         /// <param name="offset">The offset to start getting deployments from, ie 0</param>
         /// <param name="max">The max amount of deployments to get per request, ie 10. Limit is 500</param>
         /// <returns>The deployments</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<List<DeploymentResult>>?> GetDeploymentsAsync(int offset, int max);
 
         /// <summary>
@@ -47,6 +50,7 @@ namespace TapperSharp.Services
         /// </summary>
         /// <param name="ticker">The ticker, ie "tap"</param>
         /// <returns>The amount of tokens left to mint for the ticker</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<string>?> GetMintTokensLeftAsync(string ticker);
 
         /// <summary>
@@ -54,6 +58,7 @@ namespace TapperSharp.Services
         /// </summary>
         /// <param name="ticker">The ticker, ie "tap"</param>
         /// <returns>The amount of holders</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<int>?> GetHoldersLengthAsync(string ticker);
 
         /// <summary>
@@ -63,6 +68,7 @@ namespace TapperSharp.Services
         /// <param name="offset">The offset to start getting holders from, ie 0</param>
         /// <param name="max">The max amount of deployments to get per request, ie 10. Limit is 500</param>
         /// <returns>The holders</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<List<HoldersResult>>?> GetHoldersAsync(string ticker, int offset, int max);
 
         /// <summary>
@@ -70,6 +76,7 @@ namespace TapperSharp.Services
         /// </summary>
         /// <param name="address">The address</param>
         /// <returns>The amount of account tokens owned by the address</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<int>?> GetAccountTokensLengthAsync(string address);
 
 
@@ -79,6 +86,7 @@ namespace TapperSharp.Services
         /// <param name="address">The address</param>
         /// <param name="ticker">The ticker, ie "tap"</param>
         /// <returns>The balance in big integer format</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<string>?> GetBalanceAsync(string address, string ticker);
 
         /// <summary>
@@ -89,6 +97,7 @@ namespace TapperSharp.Services
         /// <param name="offset">The offset to start getting tokens from, ie 0</param>
         /// <param name="max">The max amount of deployments to get per request, ie 10. Limit is 500</param>
         /// <returns>A list of tickers the address holds/held</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<List<string>>?> GetAccountTokensAsync(string address, int offset, int max);
 
         /// <summary>
@@ -97,6 +106,19 @@ namespace TapperSharp.Services
         /// <param name="address">The address</param>
         /// <param name="ticker">The ticker, ie "tap"</param>
         /// <returns>The amount of mints ever performed by the address for the ticker</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<long>?> GetAccountMintListLengthAsync(string address, string ticker);
+
+        /// <summary>
+        /// Get account mints for a token based on address, ticker and offset and max value. Max value limit is 500.
+        /// Failed mints also show.
+        /// </summary>
+        /// <param name="address">The address</param>
+        /// <param name="ticker">The ticker, ie "tap"<</param>
+        /// <param name="offset">The offset to start getting data from, ie 0</param>
+        /// <param name="max">The max amount of mint objects to get per request, ie 10. Limit is 500</param>
+        /// <returns>The list of mints for the ticker</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<List<AccountMintListResult>>?> GetAccountMintListAsync(string address, string ticker, int offset, int max);
     }
 }

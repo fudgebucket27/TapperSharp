@@ -23,8 +23,14 @@ namespace TapperSharp.Services
                 _client = new SocketIOClient.SocketIO(host, socketIOOptions);
             }
             _client.On("error", response =>
-            {
-                Console.WriteLine($"Error {response}");
+            { 
+                var jsonResponseBaseString = JsonSerializer.Serialize(response.GetValue<TapErrorResponse>());
+                var jsonResponseBaseObject = JsonSerializer.Deserialize<TapErrorResponse>(jsonResponseBaseString);
+                if (_responseCompletionSources.TryRemove(jsonResponseBaseObject!.Cmd!.CallId!, out var completionSource))
+                {
+                    var errorException = new Exception($"Error received: {jsonResponseBaseString}");
+                    completionSource.TrySetException(errorException);
+                }
             });
             _client.On("response", response =>
             {
@@ -148,7 +154,13 @@ namespace TapperSharp.Services
                         accountMintListLengthCompletionSource.TrySetResult(accountMintListLengthResponse);
                     }
                     break;
-
+                case "accountMintList":
+                    var accountMintListResponse = JsonSerializer.Deserialize<TapResponse<List<AccountMintListResult>>>(jsonResponseGeneric);
+                    if (_responseCompletionSources.TryRemove(accountMintListResponse!.CallId!, out var accountMintListCompletionSource))
+                    {
+                        accountMintListCompletionSource.TrySetResult(accountMintListResponse);
+                    }
+                    break;
                 default:
                     Console.WriteLine("Not valid!");
                     break;
@@ -351,6 +363,24 @@ namespace TapperSharp.Services
             });
             var response = await completionSource.Task;
             return response as TapResponse<long>;
+        }
+
+        /// <inheritdoc/>
+        public async Task<TapResponse<List<AccountMintListResult>>?> GetAccountMintListAsync(string address, string ticker, int offset, int max)
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "accountMintList",
+                Args = new object[] { address, ticker, offset, max},
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<List<AccountMintListResult>>;
         }
     }
 }
