@@ -35,7 +35,7 @@ namespace TapperSharp.Services
         /// </summary>
         /// <param name="offset">The offset to start getting deployments from, ie 0</param>
         /// <param name="max">The max amount of deployments to get per request, ie 10. Limit is 500</param>
-        /// <returns></returns>
+        /// <returns>The deployments</returns>
         Task<TapResponse<List<DeploymentResult>>?> GetDeploymentsAsync(int offset, int max);
         /// <summary>
         /// Get the amount of tokens left to mint for a ticker
@@ -49,5 +49,13 @@ namespace TapperSharp.Services
         /// <param name="ticker">The ticker, ie "tap"</param>
         /// <returns>The amount of holders</returns>
         Task<TapResponse<int>?> GetHoldersLengthAsync(string ticker);
+        /// <summary>
+        /// Get holders based on a ticker, offset and max value. Max value limit is 500
+        /// </summary>
+        /// <param name="ticker">The ticker, ie "tap"</param>
+        /// <param name="offset">The offset to start getting deployments from, ie 0</param>
+        /// <param name="max">The max amount of deployments to get per request, ie 10. Limit is 500</param>
+        /// <returns>The deployments</returns>
+        Task<TapResponse<List<HoldersResult>>?> GetHoldersAsync(string ticker, int offset, int max);
     }
 }

@@ -20,6 +20,8 @@ namespace TapperConsole
             };
             var tapperClient = new TapperClient("https://tap.trac.network", socketIOOptions);
             await tapperClient.ConnectAsync();
+            var holders = await tapperClient.GetHoldersAsync("tap", 0, 10);
+            Console.WriteLine(JsonSerializer.Serialize(holders, new JsonSerializerOptions() { WriteIndented = true }));
             //var holdersLength = await tapperClient.GetHoldersLengthAsync("tap");
             //Console.WriteLine(JsonSerializer.Serialize(holdersLength, new JsonSerializerOptions() { WriteIndented = true }));
             //var tapDeployment = await tapperClient.GetDeploymentAsync("tap");

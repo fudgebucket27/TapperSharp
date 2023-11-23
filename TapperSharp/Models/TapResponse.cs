@@ -145,4 +145,24 @@ namespace TapperSharp.Models
         [JsonPropertyName("crsd")]
         public bool Crsd { get; set; }
     }
+    public class HoldersResult
+    {
+        /// <summary>
+        /// The holder address
+        /// </summary>
+        [JsonPropertyName("address")]
+        public string? Address { get; set; }
+        /// <summary>
+        /// The balance in big integer format
+        /// </summary>
+        [JsonPropertyName("balance")]
+        public string? Balance { get; set; }
+        /// <summary>
+        /// The transferable amount
+        /// </summary>
+        [JsonPropertyName("transferable")]
+        public object? Transferable { get; set; }
+    }
+
+
 }

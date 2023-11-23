@@ -106,6 +106,13 @@ namespace TapperSharp.Services
                         holdersLengthsCompletionSource.TrySetResult(holdersLengthResponse);
                     }
                     break;
+                case "holders":
+                    var holdersResponse = JsonSerializer.Deserialize<TapResponse<List<HoldersResult>>>(jsonResponseGeneric);
+                    if (_responseCompletionSources.TryRemove(holdersResponse!.CallId!, out var holdersCompletionSource))
+                    {
+                        holdersCompletionSource.TrySetResult(holdersResponse);
+                    }
+                    break;
                 default:
                     Console.WriteLine("Not valid!");
                     break;
@@ -200,6 +207,24 @@ namespace TapperSharp.Services
             });
             var response = await completionSource.Task;
             return response as TapResponse<int>;
+        }
+
+        /// <inheritdoc/>
+        public async Task<TapResponse<List<HoldersResult>>?> GetHoldersAsync(string ticker, int offset, int max)
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "holders",
+                Args = new object[] { ticker, offset, max },
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<List<HoldersResult>>;
         }
     }
 }
