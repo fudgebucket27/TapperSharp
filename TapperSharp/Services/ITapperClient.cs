@@ -333,5 +333,16 @@ namespace TapperSharp.Services
         /// <returns>The amount of accumulated items</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<long?>?> GetAccumulatorListLengthAsync();
+
+        /// <summary>
+        /// Get accumulator list based on address, offset and max value. Max value limit is 500.
+        /// Items  that may have been tapped already are shown
+        /// </summary>
+        /// <param name="address">The address</param>
+        /// <param name="offset">The offset to start getting data from, ie 0</param>
+        /// <param name="max">The max amount of objects to get per request, ie 10. Limit is 500</param>
+        /// <returns>The accumulator list</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<List<AccumulatorListResult>>?> GetAccountAccumulatorListAsync(string address, int offset, int max);
     }
 }
