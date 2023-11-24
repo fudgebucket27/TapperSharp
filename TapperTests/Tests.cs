@@ -464,6 +464,15 @@ namespace TapperTests
 
 
         [TestMethod]
+        public async Task GetAccountAuthList()
+        {
+            var result = await _tapperClient!.GetAccountAuthListAsync("bc1pccu8444ay68zltcdjzrdelpnf26us7ywg9pvwl7nkrjgrkz8rlvqe6f880", 0 , 10);
+            Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
+            Assert.IsTrue(result!.Result!.Count > 0);
+        }
+
+
+        [TestMethod]
         public async Task GetAuthCancelled()
         {
             var result = await _tapperClient!.GetAuthCancelledAsync("fd3664a56cf6d14b21504e5d83a3d4867ee256f06cbe3bddf2787d6a80a86078i0");
@@ -514,6 +523,5 @@ namespace TapperTests
             Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
             Assert.IsTrue(result!.Result!.Count > 0);
         }
-
     }
 }
