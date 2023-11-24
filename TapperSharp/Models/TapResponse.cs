@@ -252,7 +252,7 @@ namespace TapperSharp.Models
         [JsonPropertyName("amt")]
         public string? Amt { get; set; }
         /// <summary>
-        /// The transfer
+        /// The trf
         /// </summary>
         [JsonPropertyName("trf")]
         public string? Trf { get; set; }
@@ -322,7 +322,7 @@ namespace TapperSharp.Models
         [JsonPropertyName("amt")]
         public string? Amt { get; set; }
         /// <summary>
-        /// The transfer
+        /// The trf
         /// </summary>
         [JsonPropertyName("trf")]
         public string? Trf { get; set; }
@@ -468,6 +468,9 @@ namespace TapperSharp.Models
         public List<AccumulatorListItem>? Items { get; set; }
     }
 
+    /// <summary>
+    /// The accumulator list result
+    /// </summary>
     public class AccumulatorListResult
     {
         /// <summary>
@@ -510,6 +513,83 @@ namespace TapperSharp.Models
         /// </summary>
         [JsonPropertyName("addr")]
         public string? Addr { get; set; }
+    }
+
+    /// <summary>
+    /// The trade list result
+    /// </summary>
+    public class TradeListResult
+    {
+        /// <summary>
+        /// The address
+        /// </summary>
+        [JsonPropertyName("addr")]
+        public string? Addr { get; set; }
+        /// <summary>
+        /// The block
+        /// </summary>
+        [JsonPropertyName("blck")]
+        public long Blck { get; set; }
+        /// <summary>
+        /// The ticker
+        /// </summary>
+        [JsonPropertyName("tick")]
+        public string? Tick { get; set; }
+        /// <summary>
+        /// The amount
+        /// </summary>
+        [JsonPropertyName("Amt")]
+        public string? Amt { get; set; }
+        /// <summary>
+        /// The a tick
+        /// </summary>
+        [JsonPropertyName("atick")]
+        public string? Atick { get; set; }
+        /// <summary>
+        /// The a amt
+        /// </summary>
+        [JsonPropertyName("aamt")]
+        public string? Aamt { get; set; }
+        /// <summary>
+        /// The vld
+        /// </summary>
+        [JsonPropertyName("vld")]
+        public long Vld { get; set; }
+        /// <summary>
+        /// The trf
+        /// </summary>
+        [JsonPropertyName("trf")]
+        public string? Trf { get; set; }
+        /// <summary>
+        /// The balance
+        /// </summary>
+        [JsonPropertyName("bal")]
+        public string? Bal { get; set; }
+        /// <summary>
+        /// The transaction
+        /// </summary>
+        [JsonPropertyName("tx")]
+        public string? Tx { get; set; }
+        /// <summary>
+        /// The inscription
+        /// </summary>
+        [JsonPropertyName("ins")]
+        public string? Ins { get; set; }
+        /// <summary>
+        /// The num
+        /// </summary>
+        [JsonPropertyName("num")]
+        public long Num { get; set; }
+        /// <summary>
+        /// The timestamp
+        /// </summary>
+        [JsonPropertyName("ts")]
+        public long Ts { get; set; }
+        /// <summary>
+        /// Bool for if failed
+        /// </summary>
+        [JsonPropertyName("fail")]
+        public bool Fail { get; set; }
     }
 
 }

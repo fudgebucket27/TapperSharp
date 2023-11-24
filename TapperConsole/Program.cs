@@ -23,8 +23,12 @@ namespace TapperConsole
             {
                 await tapperClient.ConnectAsync();
 
-                var accumulatorListLength = await tapperClient.GetAccumulatorListLengthAsync();
-                Console.WriteLine(JsonSerializer.Serialize(accumulatorListLength, new JsonSerializerOptions() { WriteIndented = true }));
+                var tradesList = await tapperClient.GetTradesListAsync(0, 10);
+                Console.WriteLine(JsonSerializer.Serialize(tradesList, new JsonSerializerOptions() { WriteIndented = true }));
+
+
+                //var accumulatorListLength = await tapperClient.GetAccumulatorListLengthAsync();
+                //Console.WriteLine(JsonSerializer.Serialize(accumulatorListLength, new JsonSerializerOptions() { WriteIndented = true }));
 
                 //var accumulatorList = await tapperClient.GetAccumulatorListAsync(0, 10);
                 //Console.WriteLine(JsonSerializer.Serialize(accumulatorList, new JsonSerializerOptions() { WriteIndented = true }));

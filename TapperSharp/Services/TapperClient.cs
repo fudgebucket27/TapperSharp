@@ -144,6 +144,9 @@ namespace TapperSharp.Services
                 case "accumulator":
                     HandleGenericResponse<AccumulatorListResult>(jsonResponse, jsonResponseBase.CallId);
                     break;
+                case "tradesList":
+                    HandleGenericResponse<List<TradeListResult>>(jsonResponse, jsonResponseBase.CallId);
+                    break;
                 default:
                     Console.WriteLine("Unhandled function type: " + func);
                     Console.WriteLine("Response: " + jsonResponse);
@@ -782,6 +785,7 @@ namespace TapperSharp.Services
             return response as TapResponse<long?>;
         }
 
+        /// <inheritdoc/>
         public async Task<TapResponse<List<AccumulatorListResult>>?> GetAccountAccumulatorListAsync(string address, int offset, int max)
         {
             var callId = Guid.NewGuid().ToString();
@@ -799,6 +803,7 @@ namespace TapperSharp.Services
             return response as TapResponse<List<AccumulatorListResult>>;
         }
 
+        /// <inheritdoc/>
         public async Task<TapResponse<long?>?> GetTradesListLengthAsync()
         {
             var callId = Guid.NewGuid().ToString();
@@ -814,6 +819,24 @@ namespace TapperSharp.Services
             });
             var response = await completionSource.Task;
             return response as TapResponse<long?>;
+        }
+
+        /// <inheritdoc/>
+        public async Task<TapResponse<List<TradeListResult>>?> GetTradesListAsync(int offset, int max)
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "tradesList",
+                Args = new object[] { offset, max },
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<List<TradeListResult>>;
         }
     }
 }
