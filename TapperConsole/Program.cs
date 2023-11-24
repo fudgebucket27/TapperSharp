@@ -22,8 +22,8 @@ namespace TapperConsole
             try
             {
                 await tapperClient.ConnectAsync();
-
-                var result = await tapperClient!.GetAccountTradesFilledListAsync("bc1pepk5alax8jte67z4dgwywyzhyzuuqcdejcnnuswvxj6hapzu9fcs2f5lr3", "shiba", 0, 10);
+                
+                var result = await tapperClient!.GetAccountReceiveTradesFilledListAsync("bc1pepk5alax8jte67z4dgwywyzhyzuuqcdejcnnuswvxj6hapzu9fcs2f5lr3", "taposhi", 0 ,10);
                 Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
 
                 await tapperClient.DisconnectAsync();
