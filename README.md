@@ -23,7 +23,7 @@ RandomizationFactor = 0
 var _tapperClient = new TapperClient("https://tap.trac.network", socketIOOptions); // Initialize client
 await _tapperClient.ConnectAsync(); // Connect
 var holders = await _tapperClient!.GetHoldersLengthAsync("tap"); // Example usage of get holders length of a token
-await _tapperClient!.DisconnectAsync(); // Connect
+await _tapperClient!.DisconnectAsync(); // Disconnect
 ```
 
 Check the [tests](https://github.com/fudgebucket27/TapperSharp/blob/master/TapperTests/Tests.cs) for usage of all methods.
