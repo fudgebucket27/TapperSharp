@@ -125,6 +125,7 @@ namespace TapperSharp.Services
                     HandleGenericResponse<string>(jsonResponse, jsonResponseBase.CallId);
                     break;
                 case "authCancelled":
+                case "authHashExists":
                     HandleGenericResponse<bool>(jsonResponse, jsonResponseBase.CallId);
                     break;
                 case "accountTokens":
@@ -1121,6 +1122,7 @@ namespace TapperSharp.Services
             return response as TapResponse<long?>;
         }
 
+        /// <inheritdoc/>
         public async Task<TapResponse<List<AuthListResult>>?> GetAuthListAsync(int offset, int max)
         {
             var callId = Guid.NewGuid().ToString();
@@ -1139,6 +1141,7 @@ namespace TapperSharp.Services
             return response as TapResponse<List<AuthListResult>>;
         }
 
+        /// <inheritdoc/>
         public async Task<TapResponse<long?>?> GetAccountAuthListLengthAsync(string address)
         {
             var callId = Guid.NewGuid().ToString();
@@ -1157,6 +1160,7 @@ namespace TapperSharp.Services
             return response as TapResponse<long?>;
         }
 
+        /// <inheritdoc/>
         public async Task<TapResponse<List<AuthListResult>>?> GetAccountAuthListAsync(string address, int offset, int max)
         {
             var callId = Guid.NewGuid().ToString();
@@ -1175,6 +1179,7 @@ namespace TapperSharp.Services
             return response as TapResponse<List<AuthListResult>>;
         }
 
+        /// <inheritdoc/>
         public async Task<TapResponse<bool>?> GetAuthCancelledAsync(string inscriptionId)
         {
             var callId = Guid.NewGuid().ToString();
@@ -1186,6 +1191,25 @@ namespace TapperSharp.Services
             {
                 Func = "authCancelled",
                 Args = new object[] { inscriptionId },
+                CallId = callId
+            });
+
+            var response = await completionSource.Task;
+            return response as TapResponse<bool>;
+        }
+
+        /// <inheritdoc/>
+        public async Task<TapResponse<bool>?> GetAuthHashExistsAsync(string signatureHash)
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "authHashExists",
+                Args = new object[] { signatureHash },
                 CallId = callId
             });
 

@@ -528,5 +528,15 @@ namespace TapperSharp.Services
         /// <returns>The is token auth has been cancled</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<bool>?> GetAuthCancelledAsync(string inscriptionId);
+
+        /// <summary>
+        /// Accepts a string hash from a signed token-auth.
+        /// Returns true if a hash has ever been used.
+        /// Returns false if not.
+        /// </summary>
+        /// <param name="signatureHash">The signature hash</param>
+        /// <returns>The is token auth has been cancled</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<bool>?> GetAuthHashExistsAsync(string signatureHash);
     }
 }

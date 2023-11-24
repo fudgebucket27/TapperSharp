@@ -470,5 +470,17 @@ namespace TapperTests
             Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
             Assert.IsTrue(result!.Result == false);
         }
+
+        [TestMethod]
+        public async Task GetAuthHashExists()
+        {
+            var result = await _tapperClient!.GetAuthHashExistsAsync("0f30c22be2f46e819538ca1281aadb82d3928cae5a699cade80013c5b14871e4");
+            Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
+            Assert.IsTrue(result!.Result == true);
+
+            result = await _tapperClient!.GetAuthHashExistsAsync("thisReturnsFalse69420Blazeit");
+            Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
+            Assert.IsTrue(result!.Result == false);
+        }
     }
 }
