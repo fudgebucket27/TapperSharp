@@ -400,5 +400,15 @@ namespace TapperSharp.Services
         /// <returns>The trades </returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<List<TradeListResult>>?> GetAccountTradesListAsync(string address, string ticker, int offset, int max);
+
+
+        /// <summary>
+        /// Get trade based on inscriptionId
+        /// Returns null if the accumulator object doesn't exist.
+        /// </summary>
+        /// <param name="inscriptionId">The inscription id</param>
+        /// <returns>The trade</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<TradeResult>?> GetTradeAsync(string inscriptionId);
     }
 }

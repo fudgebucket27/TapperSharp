@@ -516,6 +516,112 @@ namespace TapperSharp.Models
     }
 
     /// <summary>
+    /// The trade result
+    /// </summary>
+    public class TradeResult
+    {
+        /// <summary>
+        /// The opertion
+        /// </summary>
+        [JsonPropertyName("op")]
+        public string? Op { get; set; }
+        /// <summary>
+        /// The json list 
+        /// </summary>
+        [JsonPropertyName("json")]
+        public TradeJson? Json { get; set; }
+        /// <summary>
+        /// The inscription id
+        /// </summary>
+        [JsonPropertyName("ins")]
+        public string? Ins { get; set; }
+        /// <summary>
+        /// The block
+        /// </summary>
+        [JsonPropertyName("blck")]
+        public long Blck { get; set; }
+        /// <summary>
+        /// The transaction
+        /// </summary>
+        [JsonPropertyName("tx")]
+        public string? Tx { get; set; }
+        /// <summary>
+        /// The number
+        /// </summary>
+        [JsonPropertyName("num")]
+        public long Num { get; set; }
+        /// <summary>
+        /// The timestamp
+        /// </summary>
+        [JsonPropertyName("ts")]
+        public long Ts { get; set; }
+        /// <summary>
+        /// The address
+        /// </summary>
+        [JsonPropertyName("addr")]
+        public string? Addr { get; set; }
+    }
+
+    /// <summary>
+    /// The trade list json
+    /// </summary>
+    public class TradeJson
+    {
+        /// <summary>
+        /// The protocol
+        /// </summary>
+        [JsonPropertyName("p")]
+        public string? P { get; set; }
+        /// <summary>
+        /// The operation
+        /// </summary>
+        [JsonPropertyName("op")]
+        public string? Op { get; set; }
+        /// <summary>
+        /// The side
+        /// </summary>
+        [JsonPropertyName("side")]
+        public string? Side { get; set; }
+        /// <summary>
+        /// The ticker
+        /// </summary>
+        [JsonPropertyName("tick")]
+        public string? Tick { get; set; }
+        /// <summary>
+        /// The amount
+        /// </summary>
+        [JsonPropertyName("amt")]
+        public string? Amt { get; set; }
+        /// <summary>
+        /// The accept object
+        /// </summary>
+        [JsonPropertyName("accept")]
+        public List<TradeAccept>? Accept { get; set; }
+        /// <summary>
+        /// The validness
+        /// </summary>
+        [JsonPropertyName("valid")]
+        public string? Valid { get; set; }
+    }
+
+    /// <summary>
+    /// The trade accept object
+    /// </summary>
+    public class TradeAccept
+    {
+        /// <summary>
+        /// The tick
+        /// </summary>
+        [JsonPropertyName("tick")]
+        public string? Tick { get; set; }
+        /// <summary>
+        /// The amount
+        /// </summary>
+        [JsonPropertyName("amt")]
+        public string? Amt { get; set; }
+    }
+
+    /// <summary>
     /// The trade list result
     /// </summary>
     public class TradeListResult

@@ -360,5 +360,13 @@ namespace TapperTests
             Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
             Assert.IsTrue(result!.Result!.Count > 0);
         }
+
+        [TestMethod]
+        public async Task GetTrade()
+        {
+            var result = await _tapperClient!.GetTradeAsync("eb903de9b959c59baaaa5c5d847016bb86ceacca4c4f2659750aa8a6513e9064i0");
+            Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
+            Assert.IsTrue(result!.Result! != null);
+        }
     }
 }

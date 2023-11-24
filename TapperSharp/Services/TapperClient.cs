@@ -151,6 +151,9 @@ namespace TapperSharp.Services
                 case "accountTradesList":
                     HandleGenericResponse<List<TradeListResult>>(jsonResponse, jsonResponseBase.CallId);
                     break;
+                case "trade":
+                    HandleGenericResponse<TradeResult>(jsonResponse, jsonResponseBase.CallId);
+                    break;
                 default:
                     Console.WriteLine("Unhandled function type: " + func);
                     Console.WriteLine("Response: " + jsonResponse);
@@ -910,6 +913,23 @@ namespace TapperSharp.Services
             });
             var response = await completionSource.Task;
             return response as TapResponse<List<TradeListResult>>;
+        }
+
+        public async Task<TapResponse<TradeResult>?> GetTradeAsync(string inscriptionId)
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "trade",
+                Args = new object[] { inscriptionId },
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<TradeResult>;
         }
     }
 }
