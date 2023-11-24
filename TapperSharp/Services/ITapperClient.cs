@@ -34,7 +34,7 @@ namespace TapperSharp.Services
         /// </summary>
         /// <returns>The amount of deployments on the network</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
-        Task<TapResponse<long>?> GetDeploymentsLengthAsync();
+        Task<TapResponse<long?>?> GetDeploymentsLengthAsync();
 
         /// <summary>
         /// Get deployments based on an offset and max value. Max value limit is 500
@@ -54,12 +54,12 @@ namespace TapperSharp.Services
         Task<TapResponse<string>?> GetMintTokensLeftAsync(string ticker);
 
         /// <summary>
-        /// Get the holders for the given ticker, it will also return holders that once owned but no longer hold
+        /// Get the holders for the given ticker, it will also return holders that once owned but no long?er hold
         /// </summary>
         /// <param name="ticker">The ticker, ie "tap"</param>
         /// <returns>The amount of holders</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
-        Task<TapResponse<long>?> GetHoldersLengthAsync(string ticker);
+        Task<TapResponse<long?>?> GetHoldersLengthAsync(string ticker);
 
         /// <summary>
         /// Get holders based on a ticker, offset and max value. Max value limit is 500
@@ -72,17 +72,17 @@ namespace TapperSharp.Services
         Task<TapResponse<List<HoldersResult>>?> GetHoldersAsync(string ticker, int offset, int max);
 
         /// <summary>
-        /// Get the amount of tokens held for the given address, it will also return tokens that the address once owned but no longer hold
+        /// Get the amount of tokens held for the given address, it will also return tokens that the address once owned but no long?er hold
         /// </summary>
         /// <param name="address">The address</param>
         /// <returns>The amount of account tokens owned by the address</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
-        Task<TapResponse<long>?> GetAccountTokensLengthAsync(string address);
+        Task<TapResponse<long?>?> GetAccountTokensLengthAsync(string address);
 
 
         /// <summary>
         /// Get the balance of a ticker for a given address, 
-        /// Tokens that the address once owned but no longer hold are also returned
+        /// Tokens that the address once owned but no long?er hold are also returned
         /// </summary>
         /// <param name="address">The address</param>
         /// <param name="ticker">The ticker, ie "tap"</param>
@@ -92,7 +92,7 @@ namespace TapperSharp.Services
 
         /// <summary>
         /// Get account tokens based on a address, offset and max value. Max value limit is 500.
-        /// Tokens once owned but no longer held are also returned.
+        /// Tokens once owned but no long?er held are also returned.
         /// </summary>
         /// <param name="address">The address</param>
         /// <param name="offset">The offset to start getting tokens from, ie 0</param>
@@ -108,7 +108,7 @@ namespace TapperSharp.Services
         /// <param name="ticker">The ticker, ie "tap"</param>
         /// <returns>The amount of mints ever performed by the address for the ticker</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
-        Task<TapResponse<long>?> GetAccountMintListLengthAsync(string address, string ticker);
+        Task<TapResponse<long?>?> GetAccountMintListLengthAsync(string address, string ticker);
 
         /// <summary>
         /// Get account mints for a token based on address, ticker and offset and max value. Max value limit is 500.
@@ -128,7 +128,7 @@ namespace TapperSharp.Services
         /// <param name="ticker">The ticker, ie "tap"</param>
         /// <returns>The amount of mints ever performed for the ticker</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
-        Task<TapResponse<long>?> GetTickerMintListLengthAsync(string ticker);
+        Task<TapResponse<long?>?> GetTickerMintListLengthAsync(string ticker);
 
         /// <summary>
         /// Get mints for a ticker based on it's ticker and offset and max value. Max value limit is 500.
@@ -147,7 +147,7 @@ namespace TapperSharp.Services
         /// </summary>
         /// <returns>The amount of mints ever performed</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
-        Task<TapResponse<long>?> GetMintListLengthAsync();
+        Task<TapResponse<long?>?> GetMintListLengthAsync();
 
         /// <summary>
         /// Get mints based on a offset and max value. Max value limit is 500.
@@ -166,7 +166,7 @@ namespace TapperSharp.Services
         /// <param name="ticker">The ticker, ie "tap"</param>
         /// <returns>The amount of transfer-inscribes</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
-        Task<TapResponse<long>?> GetAccountTransferListLengthAsync(string address, string ticker);
+        Task<TapResponse<long?>?> GetAccountTransferListLengthAsync(string address, string ticker);
 
         /// <summary>
         /// Get transfer list based on a offset and max value. Max value limit is 500.
@@ -207,14 +207,14 @@ namespace TapperSharp.Services
         /// <param name="ticker">The ticker, ie "tap"</param>
         /// <returns>The amount of transfer-inscribes</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
-        Task<TapResponse<long>?> GetTickerTransferListLengthAsync(string ticker);
+        Task<TapResponse<long?>?> GetTickerTransferListLengthAsync(string ticker);
 
         /// <summary>
         /// Get amount of transfer-inscribes ever performed. Includes failed
         /// </summary>
         /// <returns>The amount of transfer-inscribes ever performed</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
-        Task<TapResponse<long>?> GetTransferListLengthAsync();
+        Task<TapResponse<long?>?> GetTransferListLengthAsync();
 
         /// <summary>
         /// Get amount sent based on address and ticker
@@ -224,7 +224,7 @@ namespace TapperSharp.Services
         /// <param name="ticker">The ticker, ie "tap".</param>
         /// <returns>The amount of sends</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
-        Task<TapResponse<long>?> GetAccountSentListLengthAsync(string address, string ticker);
+        Task<TapResponse<long?>?> GetAccountSentListLengthAsync(string address, string ticker);
 
         /// <summary>
         /// Get sent list based on address, ticker,offset and max value. Max value limit is 500.
@@ -245,7 +245,7 @@ namespace TapperSharp.Services
         /// <param name="ticker">The ticker, ie "tap".</param>
         /// <returns>The amount of sends</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
-        Task<TapResponse<long>?> GetTickerSentListLengthAsync(string ticker);
+        Task<TapResponse<long?>?> GetTickerSentListLengthAsync(string ticker);
 
         /// <summary>
         /// Get sent list based on ticker,offset and max value. Max value limit is 500.
@@ -263,7 +263,7 @@ namespace TapperSharp.Services
         /// </summary>
         /// <returns>The amount of sends ever performed</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
-        Task<TapResponse<long>?> GetSentListLengthAsync();
+        Task<TapResponse<long?>?> GetSentListLengthAsync();
 
         /// <summary>
         /// Get sent list based on offset and max value. Max value limit is 500.
@@ -283,7 +283,7 @@ namespace TapperSharp.Services
         /// <param name="ticker">The ticker</param>
         /// <returns>The amount of tokens recieved</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
-        Task<TapResponse<long>?> GetAccountReceiveListLengthAsync(string address, string ticker);
+        Task<TapResponse<long?>?> GetAccountReceiveListLengthAsync(string address, string ticker);
 
         /// <summary>
         /// Get tokens recieved based on address, ticker,offset and max value. Max value limit is 500.
@@ -324,6 +324,14 @@ namespace TapperSharp.Services
         /// <param name="address">The address</param>
         /// <returns>The amount of accumulated items</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
-        Task<TapResponse<long>?> GetAccountAccumulatorListLengthAsync(string address);
+        Task<TapResponse<long?>?> GetAccountAccumulatorListLengthAsync(string address);
+
+        /// <summary>
+        /// Get amount of accumulated items across all address
+        /// Items that may have been tapped already are included
+        /// </summary>
+        /// <returns>The amount of accumulated items</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<long?>?> GetAccumulatorListLengthAsync();
     }
 }

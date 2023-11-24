@@ -104,7 +104,8 @@ namespace TapperSharp.Services
                 case "sentListLength":
                 case "accountReceiveListLength":
                 case "accountAccumulatorListLength":
-                    HandleGenericResponse<long>(jsonResponse, jsonResponseBase.CallId);
+                case "accumulatorListLength":
+                    HandleGenericResponse<long?>(jsonResponse, jsonResponseBase.CallId);
                     break;          
                 case "holders":
                     HandleGenericResponse<List<HoldersResult>>(jsonResponse, jsonResponseBase.CallId);
@@ -186,7 +187,7 @@ namespace TapperSharp.Services
         }
 
         /// <inheritdoc/>
-        public async Task<TapResponse<long>?> GetDeploymentsLengthAsync()
+        public async Task<TapResponse<long?>?> GetDeploymentsLengthAsync()
         {
             var callId = Guid.NewGuid().ToString();
 
@@ -200,7 +201,7 @@ namespace TapperSharp.Services
                 CallId = callId
             });
             var response = await completionSource.Task;
-            return response as TapResponse<long>;
+            return response as TapResponse<long?>;
         }
 
         /// <inheritdoc/>
@@ -240,7 +241,7 @@ namespace TapperSharp.Services
         }
 
         /// <inheritdoc/>
-        public async Task<TapResponse<long>?> GetHoldersLengthAsync(string ticker)
+        public async Task<TapResponse<long?>?> GetHoldersLengthAsync(string ticker)
         {
             var callId = Guid.NewGuid().ToString();
 
@@ -254,7 +255,7 @@ namespace TapperSharp.Services
                 CallId = callId
             });
             var response = await completionSource.Task;
-            return response as TapResponse<long>;
+            return response as TapResponse<long?>;
         }
 
         /// <inheritdoc/>
@@ -276,7 +277,7 @@ namespace TapperSharp.Services
         }
 
         /// <inheritdoc/>
-        public async Task<TapResponse<long>?> GetAccountTokensLengthAsync(string address)
+        public async Task<TapResponse<long?>?> GetAccountTokensLengthAsync(string address)
         {
             var callId = Guid.NewGuid().ToString();
 
@@ -290,7 +291,7 @@ namespace TapperSharp.Services
                 CallId = callId
             });
             var response = await completionSource.Task;
-            return response as TapResponse<long>;
+            return response as TapResponse<long?>;
         }
 
         /// <inheritdoc/>
@@ -348,7 +349,7 @@ namespace TapperSharp.Services
         }
 
         /// <inheritdoc/>
-        public async Task<TapResponse<long>?> GetAccountMintListLengthAsync(string address, string ticker)
+        public async Task<TapResponse<long?>?> GetAccountMintListLengthAsync(string address, string ticker)
         {
             var callId = Guid.NewGuid().ToString();
 
@@ -362,7 +363,7 @@ namespace TapperSharp.Services
                 CallId = callId
             });
             var response = await completionSource.Task;
-            return response as TapResponse<long>;
+            return response as TapResponse<long?>;
         }
 
         /// <inheritdoc/>
@@ -384,7 +385,7 @@ namespace TapperSharp.Services
         }
 
         /// <inheritdoc/>
-        public async Task<TapResponse<long>?> GetTickerMintListLengthAsync(string ticker)
+        public async Task<TapResponse<long?>?> GetTickerMintListLengthAsync(string ticker)
         {
             var callId = Guid.NewGuid().ToString();
 
@@ -398,7 +399,7 @@ namespace TapperSharp.Services
                 CallId = callId
             });
             var response = await completionSource.Task;
-            return response as TapResponse<long>;
+            return response as TapResponse<long?>;
         }
 
         /// <inheritdoc/>
@@ -420,7 +421,7 @@ namespace TapperSharp.Services
         }
 
         /// <inheritdoc/>
-        public async Task<TapResponse<long>?> GetMintListLengthAsync()
+        public async Task<TapResponse<long?>?> GetMintListLengthAsync()
         {
             var callId = Guid.NewGuid().ToString();
 
@@ -434,7 +435,7 @@ namespace TapperSharp.Services
                 CallId = callId
             });
             var response = await completionSource.Task;
-            return response as TapResponse<long>;
+            return response as TapResponse<long?>;
         }
 
         /// <inheritdoc/>
@@ -456,7 +457,7 @@ namespace TapperSharp.Services
         }
 
         /// <inheritdoc/>
-        public async Task<TapResponse<long>?> GetAccountTransferListLengthAsync(string address, string ticker)
+        public async Task<TapResponse<long?>?> GetAccountTransferListLengthAsync(string address, string ticker)
         {
             var callId = Guid.NewGuid().ToString();
 
@@ -470,7 +471,7 @@ namespace TapperSharp.Services
                 CallId = callId
             });
             var response = await completionSource.Task;
-            return response as TapResponse<long>;
+            return response as TapResponse<long?>;
         }
 
         /// <inheritdoc/>
@@ -510,7 +511,7 @@ namespace TapperSharp.Services
         }
 
         /// <inheritdoc/>
-        public async Task<TapResponse<long>?> GetTickerTransferListLengthAsync(string ticker)
+        public async Task<TapResponse<long?>?> GetTickerTransferListLengthAsync(string ticker)
         {
             var callId = Guid.NewGuid().ToString();
 
@@ -524,7 +525,7 @@ namespace TapperSharp.Services
                 CallId = callId
             });
             var response = await completionSource.Task;
-            return response as TapResponse<long>;
+            return response as TapResponse<long?>;
         }
 
         /// <inheritdoc/>
@@ -546,7 +547,7 @@ namespace TapperSharp.Services
         }
 
         /// <inheritdoc/>
-        public async Task<TapResponse<long>?> GetTransferListLengthAsync()
+        public async Task<TapResponse<long?>?> GetTransferListLengthAsync()
         {
             var callId = Guid.NewGuid().ToString();
 
@@ -560,11 +561,11 @@ namespace TapperSharp.Services
                 CallId = callId
             });
             var response = await completionSource.Task;
-            return response as TapResponse<long>;
+            return response as TapResponse<long?>;
         }
 
         /// <inheritdoc/>
-        public async Task<TapResponse<long>?> GetAccountSentListLengthAsync(string address, string ticker)
+        public async Task<TapResponse<long?>?> GetAccountSentListLengthAsync(string address, string ticker)
         {
             var callId = Guid.NewGuid().ToString();
 
@@ -578,7 +579,7 @@ namespace TapperSharp.Services
                 CallId = callId
             });
             var response = await completionSource.Task;
-            return response as TapResponse<long>;
+            return response as TapResponse<long?>;
         }
         
         /// <inheritdoc/>
@@ -600,7 +601,7 @@ namespace TapperSharp.Services
         }
 
         /// <inheritdoc/>
-        public async Task<TapResponse<long>?> GetTickerSentListLengthAsync(string ticker)
+        public async Task<TapResponse<long?>?> GetTickerSentListLengthAsync(string ticker)
         {
             var callId = Guid.NewGuid().ToString();
 
@@ -614,7 +615,7 @@ namespace TapperSharp.Services
                 CallId = callId
             });
             var response = await completionSource.Task;
-            return response as TapResponse<long>;
+            return response as TapResponse<long?>;
         }
 
         /// <inheritdoc/>
@@ -636,7 +637,7 @@ namespace TapperSharp.Services
         }
 
         /// <inheritdoc/>
-        public async Task<TapResponse<long>?> GetSentListLengthAsync()
+        public async Task<TapResponse<long?>?> GetSentListLengthAsync()
         {
             var callId = Guid.NewGuid().ToString();
 
@@ -650,7 +651,7 @@ namespace TapperSharp.Services
                 CallId = callId
             });
             var response = await completionSource.Task;
-            return response as TapResponse<long>;
+            return response as TapResponse<long?>;
         }
 
         /// <inheritdoc/>
@@ -672,7 +673,7 @@ namespace TapperSharp.Services
         }
 
         /// <inheritdoc/>
-        public async Task<TapResponse<long>?> GetAccountReceiveListLengthAsync(string address, string ticker)
+        public async Task<TapResponse<long?>?> GetAccountReceiveListLengthAsync(string address, string ticker)
         {
             var callId = Guid.NewGuid().ToString();
 
@@ -686,7 +687,7 @@ namespace TapperSharp.Services
                 CallId = callId
             });
             var response = await completionSource.Task;
-            return response as TapResponse<long>;
+            return response as TapResponse<long?>;
         }
 
         /// <inheritdoc/>
@@ -707,6 +708,7 @@ namespace TapperSharp.Services
             return response as TapResponse<List<AccountRecieveListResult>>;
         }
 
+        /// <inheritdoc/>
         public async Task<TapResponse<AccumulatorListResult>?> GetAccumulatorAsync(string inscriptionId)
         {
             var callId = Guid.NewGuid().ToString();
@@ -724,6 +726,7 @@ namespace TapperSharp.Services
             return response as TapResponse<AccumulatorListResult>;
         }
 
+        /// <inheritdoc/>
         public async Task<TapResponse<List<AccumulatorListResult>>?> GetAccumulatorListAsync(int offset, int max)
         {
             var callId = Guid.NewGuid().ToString();
@@ -741,7 +744,8 @@ namespace TapperSharp.Services
             return response as TapResponse<List<AccumulatorListResult>>;
         }
 
-        public async Task<TapResponse<long>?> GetAccountAccumulatorListLengthAsync(string address)
+        /// <inheritdoc/>
+        public async Task<TapResponse<long?>?> GetAccountAccumulatorListLengthAsync(string address)
         {
             var callId = Guid.NewGuid().ToString();
 
@@ -755,7 +759,25 @@ namespace TapperSharp.Services
                 CallId = callId
             });
             var response = await completionSource.Task;
-            return response as TapResponse<long>;
+            return response as TapResponse<long?>;
+        }
+
+        /// <inheritdoc/>
+        public async Task<TapResponse<long?>?> GetAccumulatorListLengthAsync()
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "accumulatorListLength",
+                Args = new string[0],
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<long?>;
         }
     }
 }
