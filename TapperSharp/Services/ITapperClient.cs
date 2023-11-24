@@ -447,13 +447,24 @@ namespace TapperSharp.Services
         Task<TapResponse<List<TradesFilledListResult>>?> GetTickerTradesFilledListAsync(string ticker, int offset, int max);
 
         /// <summary>
+        /// Get account trades filled amount
+        /// </summary>
+        /// <param name="address">The address</param>
+        /// <param name="ticker">The ticker, ie "tap"</param>
+        /// <returns>The trades filled amount</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<long?>?> GetAccountTradesFilledListLengthAsync(string address, string ticker);
+
+        /// <summary>
         /// Get account trades filled
         /// </summary>
         /// <param name="address">The address</param>
         /// <param name="ticker">The ticker, ie "tap"</param>
+        /// <param name="offset">The offset to start getting data from, ie 0</param>
+        /// <param name="max">The max amount of objects to get per request, ie 10. Limit is 500</param>
         /// <returns>The trades</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
-        Task<TapResponse<long?>?> GetAccountTradesFilledListLengthAsync(string address, string ticker);
+        Task<TapResponse<List<TradesFilledListResult>>?> GetAccountTradesFilledListAsync(string address, string ticker, int offset, int max);
 
     }
 }
