@@ -538,5 +538,12 @@ namespace TapperSharp.Services
         /// <returns>The is token auth has been cancled</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<bool>?> GetAuthHashExistsAsync(string signatureHash);
+
+        /// <summary>
+        /// Returns the amount of token_auths redeems.
+        /// </summary>
+        /// <returns>The amount of token_auths redeems.</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<long?>?> GetRedeemListLengthAsync();
     }
 }

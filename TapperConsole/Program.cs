@@ -23,7 +23,7 @@ namespace TapperConsole
             {
                 await tapperClient.ConnectAsync();
 
-                var result = await tapperClient!.GetAccountAuthListAsync("bc1pccu8444ay68zltcdjzrdelpnf26us7ywg9pvwl7nkrjgrkz8rlvqe6f880", 0 , 10);
+                var result = await tapperClient!.GetRedeemListLengthAsync();
                 Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
 
                 await tapperClient.DisconnectAsync();

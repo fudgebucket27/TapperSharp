@@ -482,5 +482,13 @@ namespace TapperTests
             Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
             Assert.IsTrue(result!.Result == false);
         }
+
+        [TestMethod]
+        public async Task GetRedeemListLength()
+        {
+            var result = await _tapperClient!.GetRedeemListLengthAsync();
+            Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
+            Assert.IsTrue(result!.Result > 0);
+        }
     }
 }
