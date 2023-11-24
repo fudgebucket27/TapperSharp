@@ -502,5 +502,12 @@ namespace TapperSharp.Services
         /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<List<AuthListResult>>?> GetAuthListAsync(int offset, int max);
 
+        /// <summary>
+        /// Get amount of token_auths for an address
+        /// </summary>
+        /// <returns>The amount of token_auths.</returns>
+        /// <param name="address">The address</param>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<long?>?> GetAccountAuthListLengthAsync(string address);
     }
 }

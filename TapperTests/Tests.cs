@@ -49,7 +49,7 @@ namespace TapperTests
         [TestMethod]
         public async Task GetDeployments()
         {
-            var result = await _tapperClient!.GetDeploymentsAsync(0,5);
+            var result = await _tapperClient!.GetDeploymentsAsync(0, 5);
             Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
             Assert.AreEqual(5, result!.Result!.Count);
         }
@@ -105,7 +105,7 @@ namespace TapperTests
         [TestMethod]
         public async Task GetAccountTokens()
         {
-            var result = await _tapperClient!.GetAccountTokensAsync("bc1paq960e3drpdwddfxh5kcgq48qa5yxeqsty9zez6w2c6mxr5fecrqp0syg0", 0,10);
+            var result = await _tapperClient!.GetAccountTokensAsync("bc1paq960e3drpdwddfxh5kcgq48qa5yxeqsty9zez6w2c6mxr5fecrqp0syg0", 0, 10);
             Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
             Assert.AreNotEqual(0, result!.Result!.Count);
         }
@@ -340,7 +340,7 @@ namespace TapperTests
         [TestMethod]
         public async Task GetTickerTradesList()
         {
-            var result = await _tapperClient!.GetTickerTradesListAsync("BTC", 0 ,10);
+            var result = await _tapperClient!.GetTickerTradesListAsync("BTC", 0, 10);
             Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
             Assert.IsTrue(result!.Result!.Count > 0);
         }
@@ -356,7 +356,7 @@ namespace TapperTests
         [TestMethod]
         public async Task GetAccountTradesList()
         {
-            var result = await _tapperClient!.GetAccountTradesListAsync("bc1pfaztje6lw8dk7ngg9netgvesnpa8z8dntd39dqtselw5t2uzl9cq9pvdxm", "BTC", 0 , 10);
+            var result = await _tapperClient!.GetAccountTradesListAsync("bc1pfaztje6lw8dk7ngg9netgvesnpa8z8dntd39dqtselw5t2uzl9cq9pvdxm", "BTC", 0, 10);
             Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
             Assert.IsTrue(result!.Result!.Count > 0);
         }
@@ -381,7 +381,7 @@ namespace TapperTests
         [TestMethod]
         public async Task GetTradesFilledList()
         {
-            var result = await _tapperClient!.GetTradesFilledListAsync(0,10);
+            var result = await _tapperClient!.GetTradesFilledListAsync(0, 10);
             Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
             Assert.IsTrue(result!.Result!.Count > 0);
         }
@@ -401,7 +401,7 @@ namespace TapperTests
         [TestMethod]
         public async Task GetTickerTradesFilledList()
         {
-            var result = await _tapperClient!.GetTickerTradesFilledListAsync("buidl", 0 , 10);
+            var result = await _tapperClient!.GetTickerTradesFilledListAsync("buidl", 0, 10);
             Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
             Assert.IsTrue(result!.Result!.Count >= 0);
         }
@@ -452,6 +452,14 @@ namespace TapperTests
             var result = await _tapperClient!.GetAuthListAsync(0, 10);
             Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
             Assert.IsTrue(result!.Result!.Count > 0);
+        }
+
+        [TestMethod]
+        public async Task GetAccountAuthListLength()
+        {
+            var result = await _tapperClient!.GetAccountAuthListLengthAsync("bc1pccu8444ay68zltcdjzrdelpnf26us7ywg9pvwl7nkrjgrkz8rlvqe6f880");
+            Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
+            Assert.IsTrue(result!.Result > 0);
         }
     }
 }
