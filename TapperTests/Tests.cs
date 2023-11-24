@@ -407,6 +407,14 @@ namespace TapperTests
         }
 
         [TestMethod]
+        public async Task GetAccountTradesFilledListLength()
+        {
+            var result = await _tapperClient!.GetAccountTradesFilledListLengthAsync("bc1pepk5alax8jte67z4dgwywyzhyzuuqcdejcnnuswvxj6hapzu9fcs2f5lr3", "shiba");
+            Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
+            Assert.IsTrue(result!.Result > 0);
+        }
+
+        [TestMethod]
         public async Task GetAccountTradesFilledList()
         {
             var result = await _tapperClient!.GetAccountTradesFilledListAsync("bc1pepk5alax8jte67z4dgwywyzhyzuuqcdejcnnuswvxj6hapzu9fcs2f5lr3", "shiba", 0, 10);
