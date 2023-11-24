@@ -870,4 +870,78 @@ namespace TapperSharp.Models
         public bool Fail { get; set; }
     }
 
+    /// <summary>
+    /// The token auth list result
+    /// </summary>
+    public class AuthListResult
+    {
+        /// <summary>
+        /// Address
+        /// </summary>
+        [JsonPropertyName("addr")]
+        public string? Addr { get; set; }
+        /// <summary>
+        /// Auth
+        /// </summary>
+        [JsonPropertyName("auth")]
+        public List<string>? Auth { get; set; }
+        /// <summary>
+        /// Sig
+        /// </summary>
+        [JsonPropertyName("sig")]
+        public AuthSigListResult? Sig { get; set; }
+        /// <summary>
+        /// Hash
+        /// </summary>
+        [JsonPropertyName("hash")]
+        public string? Hash { get; set; }
+        /// <summary>
+        /// Salt
+        /// </summary>
+        [JsonPropertyName("slt")]
+        public string? Slt { get; set; }
+        /// <summary>
+        /// Block
+        /// </summary>
+        [JsonPropertyName("blck")]
+        public long Blck { get; set; }
+        /// <summary>
+        /// Inscription
+        /// </summary>
+        [JsonPropertyName("ins")]
+        public string? Ins { get; set; }
+        /// <summary>
+        /// Number
+        /// </summary>
+        [JsonPropertyName("num")]
+        public long Num { get; set; }
+        /// <summary>
+        /// Timestamp
+        /// </summary>
+        [JsonPropertyName("timestamp")]
+        public long Ts { get; set; }
+    }
+
+    /// <summary>
+    /// The token auth sig list result
+    /// </summary>
+    public class AuthSigListResult
+    {
+        /// <summary>
+        /// V
+        /// </summary>
+        [JsonPropertyName("v")]
+        public string? V { get; set; }
+        /// <summary>
+        /// R
+        /// </summary>
+        [JsonPropertyName("r")]
+        public string? R { get; set; }
+        /// <summary>
+        /// S
+        /// </summary>
+        [JsonPropertyName("s")]
+        public string? S { get; set; }
+    }
+
 }

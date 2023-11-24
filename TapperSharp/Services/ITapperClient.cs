@@ -493,5 +493,14 @@ namespace TapperSharp.Services
         /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<long?>?> GetAuthListLengthAsync();
 
+        /// <summary>
+        /// Get list of token_auths.
+        /// </summary>
+        /// <param name="offset">The offset to start getting data from, ie 0</param>
+        /// <param name="max">The max amount of objects to get per request, ie 10. Limit is 500</param>
+        /// <returns>The token_auths list</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<List<AuthListResult>>?> GetAuthListAsync(int offset, int max);
+
     }
 }
