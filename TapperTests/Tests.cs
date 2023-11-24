@@ -490,10 +490,27 @@ namespace TapperTests
             Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
             Assert.IsTrue(result!.Result > 0);
         }
+
         [TestMethod]
         public async Task GetRedeemList()
         {
             var result = await _tapperClient!.GetRedeemListAsync(0,10);
+            Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
+            Assert.IsTrue(result!.Result!.Count > 0);
+        }
+
+        [TestMethod]
+        public async Task GetAccountRedeemListLength()
+        {
+            var result = await _tapperClient!.GetAccountRedeemListLengthAsync("bc1pccu8444ay68zltcdjzrdelpnf26us7ywg9pvwl7nkrjgrkz8rlvqe6f880");
+            Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
+            Assert.IsTrue(result!.Result > 0);
+        }
+
+        [TestMethod]
+        public async Task GetAccountRedeemList()
+        {
+            var result = await _tapperClient!.GetAccountRedeemListAsync("bc1pccu8444ay68zltcdjzrdelpnf26us7ywg9pvwl7nkrjgrkz8rlvqe6f880", 0, 10);
             Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
             Assert.IsTrue(result!.Result!.Count > 0);
         }

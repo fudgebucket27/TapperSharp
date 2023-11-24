@@ -554,5 +554,23 @@ namespace TapperSharp.Services
         /// <returns>The list  of token_auths redeems.</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<List<RedeemListResult>>?> GetRedeemListAsync(int offset, int max);
+
+        /// <summary>
+        /// Returns the amount of token_auths redeems for an address
+        /// </summary>
+        /// <param name="address">The address</param>
+        /// <returns>The amount of token_auths redeems.</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<long?>?> GetAccountRedeemListLengthAsync(string address);
+
+        /// <summary>
+        /// Returns the list of token_auths redeems for an addres
+        /// </summary>
+        /// <param name="address">The address</param>
+        /// <param name="offset">The offset to start getting data from, ie 0</param>
+        /// <param name="max">The max amount of objects to get per request, ie 10. Limit is 500</param>
+        /// <returns>The list  of token_auths redeems.</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<List<RedeemListResult>>?> GetAccountRedeemListAsync(string address, int offset, int max);
     }
 }

@@ -115,6 +115,7 @@ namespace TapperSharp.Services
                 case "authListLength":
                 case "accountAuthListLength":
                 case "redeemListLength":
+                case "accountRedeemListLength":
                     HandleGenericResponse<long?>(jsonResponse, jsonResponseBase.CallId);
                     break;          
                 case "holders":
@@ -178,6 +179,7 @@ namespace TapperSharp.Services
                     HandleGenericResponse<List<AuthListResult>>(jsonResponse, jsonResponseBase.CallId);
                     break;
                 case "redeemList":
+                case "accountRedeemList":
                     HandleGenericResponse<List<RedeemListResult>>(jsonResponse, jsonResponseBase.CallId);
                     break;
                 default:
@@ -1251,6 +1253,42 @@ namespace TapperSharp.Services
             {
                 Func = "redeemList",
                 Args = new object[] {offset, max},
+                CallId = callId
+            });
+
+            var response = await completionSource.Task;
+            return response as TapResponse<List<RedeemListResult>>;
+        }
+
+        public async Task<TapResponse<long?>?> GetAccountRedeemListLengthAsync(string address)
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "accountRedeemListLength",
+                Args = new object[] {address},
+                CallId = callId
+            });
+
+            var response = await completionSource.Task;
+            return response as TapResponse<long?>;
+        }
+
+        public async Task<TapResponse<List<RedeemListResult>>?> GetAccountRedeemListAsync(string address, int offset, int max)
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "accountRedeemList",
+                Args = new object[] { address, offset, max },
                 CallId = callId
             });
 
