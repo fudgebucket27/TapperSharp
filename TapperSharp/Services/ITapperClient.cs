@@ -486,5 +486,12 @@ namespace TapperSharp.Services
         /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<List<AccountRecieveTradesFilledListResult>>?> GetAccountReceiveTradesFilledListAsync(string address, string ticker, int offset, int max);
 
+        /// <summary>
+        /// Get amount of token_auths.
+        /// </summary>
+        /// <returns>The amount of token_auths.</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<long?>?> GetAuthListLengthAsync();
+
     }
 }

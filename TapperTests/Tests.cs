@@ -437,5 +437,13 @@ namespace TapperTests
             Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
             Assert.IsTrue(result!.Result!.Count > 0);
         }
+
+        [TestMethod]
+        public async Task GetAuthListLength()
+        {
+            var result = await _tapperClient!.GetAuthListLengthAsync();
+            Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
+            Assert.IsTrue(result!.Result > 0);
+        }
     }
 }
