@@ -410,5 +410,13 @@ namespace TapperSharp.Services
         /// <returns>The trade</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<TradeResult>?> GetTradeAsync(string inscriptionId);
+
+
+        /// <summary>
+        /// Get amount of trades filled
+        /// </summary>
+        /// <returns>The amount of trades filled</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<long?>?> GetTradesFilledListLengthAsync();
     }
 }

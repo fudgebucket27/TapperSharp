@@ -108,6 +108,7 @@ namespace TapperSharp.Services
                 case "tradesListLength":
                 case "tickerTradesListLength":
                 case "accountTradesListLength":
+                case "tradesFilledListLength":
                     HandleGenericResponse<long?>(jsonResponse, jsonResponseBase.CallId);
                     break;          
                 case "holders":
@@ -864,6 +865,7 @@ namespace TapperSharp.Services
             return response as TapResponse<long?>;
         }
 
+        /// <inheritdoc/>
         public async Task<TapResponse<List<TradeListResult>>?> GetTickerTradesListAsync(string ticker, int offset, int max)
         {
             var callId = Guid.NewGuid().ToString();
@@ -881,6 +883,7 @@ namespace TapperSharp.Services
             return response as TapResponse<List<TradeListResult>>;
         }
 
+        /// <inheritdoc/>
         public async Task<TapResponse<long?>?> GetAccountTradesListLengthAsync(string address, string ticker)
         {
             var callId = Guid.NewGuid().ToString();
@@ -898,6 +901,7 @@ namespace TapperSharp.Services
             return response as TapResponse<long?>;
         }
 
+        /// <inheritdoc/>
         public async Task<TapResponse<List<TradeListResult>>?> GetAccountTradesListAsync(string address, string ticker, int offset, int max)
         {
             var callId = Guid.NewGuid().ToString();
@@ -915,6 +919,7 @@ namespace TapperSharp.Services
             return response as TapResponse<List<TradeListResult>>;
         }
 
+        /// <inheritdoc/>
         public async Task<TapResponse<TradeResult>?> GetTradeAsync(string inscriptionId)
         {
             var callId = Guid.NewGuid().ToString();
@@ -930,6 +935,24 @@ namespace TapperSharp.Services
             });
             var response = await completionSource.Task;
             return response as TapResponse<TradeResult>;
+        }
+
+        /// <inheritdoc/>
+        public async Task<TapResponse<long?>?> GetTradesFilledListLengthAsync()
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "tradesFilledListLength",
+                Args = new string[0] ,
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<long?>;
         }
     }
 }
