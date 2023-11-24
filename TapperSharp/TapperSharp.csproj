@@ -4,6 +4,15 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>TapperSharp</Title>
+    <Description>A C# Socket.io Client Wrapper around Benny's Public TAP Endpoints</Description>
+    <PackageProjectUrl></PackageProjectUrl>
+    <PackageTags>tap;bitcoin;trac;</PackageTags>
+    <PackageReleaseNotes>Initial commit</PackageReleaseNotes>
+    <AssemblyVersion></AssemblyVersion>
+    <Version>0.0.1</Version>
+    <RepositoryUrl>https://github.com/fudgebucket27/tappersharp</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
