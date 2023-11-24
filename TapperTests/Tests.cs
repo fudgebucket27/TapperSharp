@@ -344,5 +344,21 @@ namespace TapperTests
             Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
             Assert.IsTrue(result!.Result!.Count > 0);
         }
+
+        [TestMethod]
+        public async Task GetAccountTradesListLength()
+        {
+            var result = await _tapperClient!.GetAccountTradesListLengthAsync("bc1pfaztje6lw8dk7ngg9netgvesnpa8z8dntd39dqtselw5t2uzl9cq9pvdxm", "BTC");
+            Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
+            Assert.IsTrue(result!.Result! > 0);
+        }
+
+        [TestMethod]
+        public async Task GetAccountTradesList()
+        {
+            var result = await _tapperClient!.GetAccountTradesListAsync("bc1pfaztje6lw8dk7ngg9netgvesnpa8z8dntd39dqtselw5t2uzl9cq9pvdxm", "BTC", 0 , 10);
+            Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
+            Assert.IsTrue(result!.Result!.Count > 0);
+        }
     }
 }

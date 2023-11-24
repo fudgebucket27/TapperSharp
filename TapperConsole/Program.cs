@@ -16,87 +16,16 @@ namespace TapperConsole
                 Reconnection = true,
                 ReconnectionDelay = 500,
                 ReconnectionDelayMax = 500,
-                RandomizationFactor = 0
+                RandomizationFactor = 0                
             };
             var tapperClient = new TapperClient("https://tap.trac.network", socketIOOptions);
             try
             {
                 await tapperClient.ConnectAsync();
 
-                var tickerTradesList = await tapperClient.GetTickerTradesListAsync("BTC", 0, 10);
-                Console.WriteLine(JsonSerializer.Serialize(tickerTradesList, new JsonSerializerOptions() { WriteIndented = true }));
+                var result = await tapperClient!.GetAccountTradesListAsync("bc1pfaztje6lw8dk7ngg9netgvesnpa8z8dntd39dqtselw5t2uzl9cq9pvdxm", "BTC", 0, 10);
+                Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
 
-                //var tickerTradesListLength = await tapperClient.GetTickerTradesListLengthAsync("BTC");
-                //Console.WriteLine(JsonSerializer.Serialize(tickerTradesListLength, new JsonSerializerOptions() { WriteIndented = true }));
-
-                //var tradesList = await tapperClient.GetTradesListAsync(0, 10);
-                //Console.WriteLine(JsonSerializer.Serialize(tradesList, new JsonSerializerOptions() { WriteIndented = true }));
-
-
-                //var accumulatorListLength = await tapperClient.GetAccumulatorListLengthAsync();
-                //Console.WriteLine(JsonSerializer.Serialize(accumulatorListLength, new JsonSerializerOptions() { WriteIndented = true }));
-
-                //var accumulatorList = await tapperClient.GetAccumulatorListAsync(0, 10);
-                //Console.WriteLine(JsonSerializer.Serialize(accumulatorList, new JsonSerializerOptions() { WriteIndented = true }));
-                //var accumulator2 = await tapperClient.GetAccumulatorAsync("4fdfac67e25701a292530303e32b0ec4fd0799d31d0691184f392e194529b5e8i0");
-                //Console.WriteLine(JsonSerializer.Serialize(accumulator2, new JsonSerializerOptions() { WriteIndented = true }));
-                //var accumulator = await tapperClient.GetAccumulatorAsync("040b39c793028677de567eeecfd181fef82eef7313b1764cf2090a283653d06ai0");
-                //Console.WriteLine(JsonSerializer.Serialize(accumulator, new JsonSerializerOptions() { WriteIndented = true }));
-                //var tickerSentList = await tapperClient.GetSentListAsync(0, 10);
-                //Console.WriteLine(JsonSerializer.Serialize(tickerSentList, new JsonSerializerOptions() { WriteIndented = true }));
-
-                //var tickerSentList = await tapperClient.GetTickerSentListAsync("-tap", 0 , 10);
-                //Console.WriteLine(JsonSerializer.Serialize(tickerSentList, new JsonSerializerOptions() { WriteIndented = true }));
-
-                //var tickerSentListLength = await tapperClient.GetTickerSentListLengthAsync("-tap");
-                //Console.WriteLine(JsonSerializer.Serialize(tickerSentListLength, new JsonSerializerOptions() { WriteIndented = true }));
-                //var accountSentList = await tapperClient.GetAccountSentListAsync("bc1pdqgwqyc2n04a4ttd5kutzcmpjlqgvpdw2x225d7xewrypqa03nus6mddlq", "-tap", 0 , 10);
-                //Console.WriteLine(JsonSerializer.Serialize(accountSentList, new JsonSerializerOptions() { WriteIndented = true }));
-                //var accountSentListLength = await tapperClient.GetAccountSentListLengthAsync("bc1pdqgwqyc2n04a4ttd5kutzcmpjlqgvpdw2x225d7xewrypqa03nus6mddlq", "-tap");
-                //Console.WriteLine(JsonSerializer.Serialize(accountSentListLength, new JsonSerializerOptions() { WriteIndented = true }));
-                //var accountTransferList = await tapperClient.GetAccountTransferListAsync("bc1pdqgwqyc2n04a4ttd5kutzcmpjlqgvpdw2x225d7xewrypqa03nus6mddlq", "-tap", 0, 10);
-                //Console.WriteLine(JsonSerializer.Serialize(accountTransferList, new JsonSerializerOptions() { WriteIndented = true }));
-                //var tickerTransferListLength = await tapperClient.GetTickerTransferListLengthAsync("-tap");
-                //Console.WriteLine(JsonSerializer.Serialize(tickerTransferListLength, new JsonSerializerOptions() { WriteIndented = true }));
-                //var tickerTransferList = await tapperClient.GetTickerTransferListAsync("-tap", 0, 10);
-                //Console.WriteLine(JsonSerializer.Serialize(tickerTransferList, new JsonSerializerOptions() { WriteIndented = true }));
-                //var transferList = await tapperClient.GetTransferListAsync(0, 10);
-                //Console.WriteLine(JsonSerializer.Serialize(transferList, new JsonSerializerOptions() { WriteIndented = true }));
-                //var accountTransferListLength = await tapperClient.GetAccountTransferListLengthAsync("bc1paq960e3drpdwddfxh5kcgq48qa5yxeqsty9zez6w2c6mxr5fecrqp0syg0", "tap");
-                //Console.WriteLine(JsonSerializer.Serialize(accountTransferListLength, new JsonSerializerOptions() { WriteIndented = true }));
-                //var mintList = await tapperClient.GetMintListAsync(0, 10);
-                //Console.WriteLine(JsonSerializer.Serialize(mintList, new JsonSerializerOptions() { WriteIndented = true }));
-                //var mintListLength = await tapperClient.GetMintListLengthAsync();
-                //Console.WriteLine(JsonSerializer.Serialize(mintListLength, new JsonSerializerOptions() { WriteIndented = true }));
-                //var tickerMintList = await tapperClient.GetTickerMintListAsync("tap", 0, 10);
-                //Console.WriteLine(JsonSerializer.Serialize(tickerMintList, new JsonSerializerOptions() { WriteIndented = true }));
-                //var ticketMintListLength = await tapperClient.GetTickerMintListLengthAsync("tap");
-                //Console.WriteLine(JsonSerializer.Serialize(ticketMintListLength, new JsonSerializerOptions() { WriteIndented = true }));
-                //var accountTokensLength = await tapperClient.GetAccountTokensLengthAsync(holders!.Result![0]!.Address!);
-                //var holders = await tapperClient.GetHoldersAsync("tap", 0, 10);
-                //Console.WriteLine(JsonSerializer.Serialize(holders, new JsonSerializerOptions() { WriteIndented = true }));
-                //var accountTokensLength = await tapperClient.GetAccountTokensLengthAsync(holders!.Result![0]!.Address!);
-                //Console.WriteLine(JsonSerializer.Serialize(accountTokensLength, new JsonSerializerOptions() { WriteIndented = true }));
-                //var balance = await tapperClient.GetBalanceAsync(holders!.Result[0]!.Address!, "tap");
-                //Console.WriteLine(JsonSerializer.Serialize(balance, new JsonSerializerOptions() { WriteIndented = true }));
-                //var transferable = await tapperClient.GetTransferableAsync(holders!.Result[0]!.Address!, "tap");
-                //Console.WriteLine(JsonSerializer.Serialize(transferable, new JsonSerializerOptions() { WriteIndented = true }));
-                //var accountTokens = await tapperClient.GetAccountTokensAsync("bc1paq960e3drpdwddfxh5kcgq48qa5yxeqsty9zez6w2c6mxr5fecrqp0syg0", 0, 10);
-                //Console.WriteLine(JsonSerializer.Serialize(accountTokens, new JsonSerializerOptions() { WriteIndented = true }));
-                //var accountMintListLength = await tapperClient.GetAccountMintListLengthAsync("bc1paq960e3drpdwddfxh5kcgq48qa5yxeqsty9zez6w2c6mxr5fecrqp0syg0", "tap");
-                //Console.WriteLine(JsonSerializer.Serialize(accountMintListLength, new JsonSerializerOptions() { WriteIndented = true }));
-                //var accountMintList = await tapperClient.GetAccountMintListAsync("bc1paq960e3drpdwddfxh5kcgq48qa5yxeqsty9zez6w2c6mxr5fecrqp0syg0", "tap", 0, 10);
-                //Console.WriteLine(JsonSerializer.Serialize(accountMintList, new JsonSerializerOptions() { WriteIndented = true }));
-                //var holdersLength = await tapperClient.GetHoldersLengthAsync("tap");
-                //Console.WriteLine(JsonSerializer.Serialize(holdersLength, new JsonSerializerOptions() { WriteIndented = true }));
-                //var tapDeployment = await tapperClient.GetDeploymentAsync("tap");
-                //Console.WriteLine(JsonSerializer.Serialize(tapDeployment,  new JsonSerializerOptions() { WriteIndented = true}));
-                //var deploymentsLength = await tapperClient.GetDeploymentsLengthAsync();
-                //Console.WriteLine(JsonSerializer.Serialize(deploymentsLength, new JsonSerializerOptions() { WriteIndented = true }));
-                //var deployments = await tapperClient.GetDeploymentsAsync(0,10);
-                //Console.WriteLine(JsonSerializer.Serialize(deployments, new JsonSerializerOptions() { WriteIndented = true }));
-                //var mintTokensLeft = await tapperClient.GetMintTokensLeftAsync("tap");
-                //Console.WriteLine(JsonSerializer.Serialize(mintTokensLeft, new JsonSerializerOptions() { WriteIndented = true }));
                 await tapperClient.DisconnectAsync();
             }
             catch (Exception ex)

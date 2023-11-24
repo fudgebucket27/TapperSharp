@@ -538,7 +538,7 @@ namespace TapperSharp.Models
         /// <summary>
         /// The amount
         /// </summary>
-        [JsonPropertyName("Amt")]
+        [JsonPropertyName("amt")]
         public string? Amt { get; set; }
         /// <summary>
         /// The a tick
