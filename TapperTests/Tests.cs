@@ -385,5 +385,17 @@ namespace TapperTests
             Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
             Assert.IsTrue(result!.Result!.Count > 0);
         }
+
+        [TestMethod]
+        public async Task GetTickerTradesFilledListLength()
+        {
+            var result = await _tapperClient!.GetTickerTradesFilledListLengthAsync("ordfi");
+            Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
+            Assert.IsTrue(result!.Result! > 0);
+
+            result = await _tapperClient!.GetTickerTradesFilledListLengthAsync("xxx123123xxx1");
+            Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
+            Assert.IsTrue(result!.Result! == 0);
+        }
     }
 }
