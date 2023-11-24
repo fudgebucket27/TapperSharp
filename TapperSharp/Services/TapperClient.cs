@@ -146,6 +146,7 @@ namespace TapperSharp.Services
                     HandleGenericResponse<AccumulatorListResult>(jsonResponse, jsonResponseBase.CallId);
                     break;
                 case "tradesList":
+                case "tickerTradesList":
                     HandleGenericResponse<List<TradeListResult>>(jsonResponse, jsonResponseBase.CallId);
                     break;
                 default:
@@ -855,6 +856,23 @@ namespace TapperSharp.Services
             });
             var response = await completionSource.Task;
             return response as TapResponse<long?>;
+        }
+
+        public async Task<TapResponse<List<TradeListResult>>?> GetTickerTradesListAsync(string ticker, int offset, int max)
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "tickerTradesList",
+                Args = new object[] { ticker, offset, max },
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<List<TradeListResult>>;
         }
     }
 }

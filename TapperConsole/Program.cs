@@ -23,9 +23,11 @@ namespace TapperConsole
             {
                 await tapperClient.ConnectAsync();
 
+                var tickerTradesList = await tapperClient.GetTickerTradesListAsync("BTC", 0, 10);
+                Console.WriteLine(JsonSerializer.Serialize(tickerTradesList, new JsonSerializerOptions() { WriteIndented = true }));
 
-                var tickerTradesListLength = await tapperClient.GetTickerTradesListLengthAsync("BTC");
-                Console.WriteLine(JsonSerializer.Serialize(tickerTradesListLength, new JsonSerializerOptions() { WriteIndented = true }));
+                //var tickerTradesListLength = await tapperClient.GetTickerTradesListLengthAsync("BTC");
+                //Console.WriteLine(JsonSerializer.Serialize(tickerTradesListLength, new JsonSerializerOptions() { WriteIndented = true }));
 
                 //var tradesList = await tapperClient.GetTradesListAsync(0, 10);
                 //Console.WriteLine(JsonSerializer.Serialize(tradesList, new JsonSerializerOptions() { WriteIndented = true }));
