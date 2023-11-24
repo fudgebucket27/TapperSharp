@@ -303,18 +303,27 @@ namespace TapperSharp.Services
         /// Returns null if the accumulator object doesn't exist.
         /// </summary>
         /// <param name="inscriptionId">The inscription id</param>
-        /// <returns>The tokens recieved</returns>
+        /// <returns>The accumulator</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<AccumulatorListResult>?> GetAccumulatorAsync(string inscriptionId);
 
         /// <summary>
         /// Get accumulator list based on offset and max value. Max value limit is 500.
-        /// Items  that may have been tapped already are show
+        /// Items  that may have been tapped already are shown
         /// </summary>
         /// <param name="offset">The offset to start getting data from, ie 0</param>
         /// <param name="max">The max amount of objects to get per request, ie 10. Limit is 500</param>
         /// <returns>The accumulator list</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<List<AccumulatorListResult>>?> GetAccumulatorListAsync(int offset, int max);
+
+        /// <summary>
+        /// Get amount of accumulated items based on address
+        /// Items that may have been tapped already are included
+        /// </summary>
+        /// <param name="address">The address</param>
+        /// <returns>The amount of accumulated items</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<long>?> GetAccountAccumulatorListLengthAsync(string address);
     }
 }

@@ -288,5 +288,13 @@ namespace TapperTests
             Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
             Assert.IsTrue(result!.Result! == null);
         }
+
+        [TestMethod]
+        public async Task GetAccountAccumulatorListLength()
+        {
+            var result = await _tapperClient!.GetAccountAccumulatorListLengthAsync("bc1paq960e3drpdwddfxh5kcgq48qa5yxeqsty9zez6w2c6mxr5fecrqp0syg0");
+            Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
+            Assert.IsTrue(result!.Result! > 0);
+        }
     }
 }
