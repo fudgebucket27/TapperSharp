@@ -124,6 +124,9 @@ namespace TapperSharp.Services
                 case "balance":
                     HandleGenericResponse<string>(jsonResponse, jsonResponseBase.CallId);
                     break;
+                case "authCancelled":
+                    HandleGenericResponse<bool>(jsonResponse, jsonResponseBase.CallId);
+                    break;
                 case "accountTokens":
                     HandleGenericResponse<List<string>>(jsonResponse, jsonResponseBase.CallId);
                     break;               
@@ -1170,6 +1173,24 @@ namespace TapperSharp.Services
 
             var response = await completionSource.Task;
             return response as TapResponse<List<AuthListResult>>;
+        }
+
+        public async Task<TapResponse<bool>?> GetAuthCancelledAsync(string inscriptionId)
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "authCancelled",
+                Args = new object[] { inscriptionId },
+                CallId = callId
+            });
+
+            var response = await completionSource.Task;
+            return response as TapResponse<bool>;
         }
     }    
 }

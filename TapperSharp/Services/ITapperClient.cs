@@ -519,5 +519,14 @@ namespace TapperSharp.Services
         /// <param name="max">The max amount of objects to get per request, ie 10. Limit is 500</param>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<List<AuthListResult>>?> GetAccountAuthListAsync(string address, int offset, int max);
+
+        /// <summary>
+        /// Returns true if the given token-auth has been cancelled.
+        /// Returns false if not.
+        /// </summary>
+        /// <param name="inscriptionId">The inscription id</param>
+        /// <returns>The is token auth has been cancled</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<bool>?> GetAuthCancelledAsync(string inscriptionId);
     }
 }

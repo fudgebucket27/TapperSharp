@@ -461,5 +461,14 @@ namespace TapperTests
             Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
             Assert.IsTrue(result!.Result > 0);
         }
+
+
+        [TestMethod]
+        public async Task GetAuthCancelled()
+        {
+            var result = await _tapperClient!.GetAuthCancelledAsync("fd3664a56cf6d14b21504e5d83a3d4867ee256f06cbe3bddf2787d6a80a86078i0");
+            Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
+            Assert.IsTrue(result!.Result == false);
+        }
     }
 }
