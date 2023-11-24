@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -943,5 +944,128 @@ namespace TapperSharp.Models
         [JsonPropertyName("s")]
         public string? S { get; set; }
     }
+
+    /// <summary>
+    /// The redeem list result
+    /// </summary>
+    public class RedeemListResult
+    {
+        // <summary>
+        /// The address
+        /// </summary>
+        [JsonPropertyName("addr")]
+        public string? Addr { get; set; }
+        // <summary>
+        /// The i address
+        /// </summary>
+        [JsonPropertyName("iaddr")]
+        public string? Iaddr { get; set; }
+        // <summary>
+        /// The redeem
+        /// </summary>
+        [JsonPropertyName("rdm")]
+        public Redeem? Rdm { get; set; }
+        // <summary>
+        /// The signature
+        /// </summary>
+        [JsonPropertyName("sig")]
+        public RedeemSig? Sig { get; set; }
+        // <summary>
+        /// The hash
+        /// </summary>
+        [JsonPropertyName("hash")]
+        public string? Hash { get; set; }
+        // <summary>
+        /// The salt
+        /// </summary>
+        [JsonPropertyName("slt")]
+        public string? Slt { get; set; }
+        // <summary>
+        /// The block
+        /// </summary>
+        [JsonPropertyName("blck")]
+        public long Blck { get; set; }
+        // <summary>
+        /// The inscription
+        /// </summary>
+        [JsonPropertyName("ins")]
+        public string? Ins { get; set; }
+        // <summary>
+        /// The num
+        /// </summary>
+        [JsonPropertyName("num")]
+        public long Num { get; set; }
+        // <summary>
+        /// The timestamp
+        /// </summary>
+        [JsonPropertyName("ts")]
+        public long Ts { get; set; }
+    }
+
+    /// <summary>
+    /// The redeem
+    /// </summary>
+    public class Redeem
+    {
+        // <summary>
+        /// The items
+        /// </summary>
+        [JsonPropertyName("items")]
+        public List<RedeemItem>? Items { get; set; }
+        // <summary>
+        /// The  auth
+        /// </summary>
+        [JsonPropertyName("auth")]
+        public string? Auth { get; set; }
+        // <summary>
+        /// The data
+        /// </summary>
+        [JsonPropertyName("data")]
+        public string? Data { get; set; }
+    }
+
+    /// <summary>
+    /// The redeem item
+    /// </summary>
+    public class RedeemItem
+    {
+        /// <summary>
+        /// The ticker
+        /// </summary>
+        [JsonPropertyName("tick")]
+        public string? Tick { get; set; }
+        /// <summary>
+        /// Amount
+        /// </summary>
+        [JsonPropertyName("amt")]
+        public string? Amt { get; set; }
+        /// <summary>
+        /// Address
+        /// </summary>
+        [JsonPropertyName("address")]
+        public string? Address { get; set; }
+    }
+    /// <summary>
+    /// The redeem signature
+    /// </summary>
+    public class RedeemSig
+    {
+        /// <summary>
+        /// V
+        /// </summary>
+        [JsonPropertyName("v")]
+        public string? V { get; set; }
+        /// <summary>
+        /// R
+        /// </summary>
+        [JsonPropertyName("r")]
+        public string? R { get; set; }
+        /// <summary>
+        /// S
+        /// </summary>
+        [JsonPropertyName("s")]
+        public string? S { get; set; }
+    }
+
 
 }

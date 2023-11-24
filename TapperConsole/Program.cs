@@ -23,7 +23,7 @@ namespace TapperConsole
             {
                 await tapperClient.ConnectAsync();
 
-                var result = await tapperClient!.GetRedeemListLengthAsync();
+                var result = await tapperClient!.GetRedeemListAsync(0, 10);
                 Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
 
                 await tapperClient.DisconnectAsync();
