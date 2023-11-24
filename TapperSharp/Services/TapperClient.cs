@@ -106,6 +106,7 @@ namespace TapperSharp.Services
                 case "accountAccumulatorListLength":
                 case "accumulatorListLength":
                 case "tradesListLength":
+                case "tickerTradesListLength":
                     HandleGenericResponse<long?>(jsonResponse, jsonResponseBase.CallId);
                     break;          
                 case "holders":
@@ -837,6 +838,23 @@ namespace TapperSharp.Services
             });
             var response = await completionSource.Task;
             return response as TapResponse<List<TradeListResult>>;
+        }
+
+        public async Task<TapResponse<long?>?> GetTickerTradesListLengthAsync(string ticker)
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "tickerTradesListLength",
+                Args = new object[] { ticker},
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<long?>;
         }
     }
 }
