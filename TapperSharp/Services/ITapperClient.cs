@@ -344,5 +344,13 @@ namespace TapperSharp.Services
         /// <returns>The accumulator list</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<List<AccumulatorListResult>>?> GetAccountAccumulatorListAsync(string address, int offset, int max);
+
+
+        /// <summary>
+        /// Get amount of trades
+        /// </summary>
+        /// <returns>The amount of trades</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<long?>?> GetTradesListLengthAsync();
     }
 }
