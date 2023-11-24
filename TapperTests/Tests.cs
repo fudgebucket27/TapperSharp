@@ -401,9 +401,17 @@ namespace TapperTests
         [TestMethod]
         public async Task GetTickerTradesFilledList()
         {
-            var result = await _tapperClient!.GetTickerTradesFilledListAsync("ordfi", 0 , 10);
+            var result = await _tapperClient!.GetTickerTradesFilledListAsync("buidl", 0 , 10);
             Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
             Assert.IsTrue(result!.Result!.Count >= 0);
+        }
+
+        [TestMethod]
+        public async Task GetAccountTradesFilledList()
+        {
+            var result = await _tapperClient!.GetAccountTradesFilledListLengthAsync("bc1pepk5alax8jte67z4dgwywyzhyzuuqcdejcnnuswvxj6hapzu9fcs2f5lr3", "shiba");
+            Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
+            Assert.IsTrue(result!.Result! > 0);
         }
     }
 }

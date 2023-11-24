@@ -23,7 +23,7 @@ namespace TapperConsole
             {
                 await tapperClient.ConnectAsync();
 
-                var result = await tapperClient!.GetTickerTradesFilledListAsync("BTC", 0,10);
+                var result = await tapperClient!.GetTickerTradesFilledListAsync("buidl", 0,10);
                 Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
 
                 await tapperClient.DisconnectAsync();
