@@ -698,4 +698,88 @@ namespace TapperSharp.Models
         public bool Fail { get; set; }
     }
 
+    public class TradesFilledListResult
+    {
+        /// <summary>
+        /// Address
+        /// </summary>
+        [JsonPropertyName("addr")]
+        public string? Addr { get; set; }
+        /// <summary>
+        /// Secondary Address
+        /// </summary>
+        [JsonPropertyName("saddr")]
+        public string? Saddr { get; set; }
+        /// <summary>
+        /// Block
+        /// </summary>
+        [JsonPropertyName("blck")]
+        public long Blck { get; set; }
+        /// <summary>
+        /// Ticker
+        /// </summary>
+        [JsonPropertyName("tick")]
+        public string? Tick { get; set; }
+        /// <summary>
+        /// Amount
+        /// </summary>
+        [JsonPropertyName("amt")]
+        public string? Amt { get; set; }
+        /// <summary>
+        /// Secondary Ticker
+        /// </summary>
+        [JsonPropertyName("stick")]
+        public string? Stick { get; set; }
+        /// <summary>
+        /// Secondary Amount
+        /// </summary>
+        [JsonPropertyName("samt")]
+        public string? Samt { get; set; }
+        /// <summary>
+        /// Fee
+        /// </summary>
+        [JsonPropertyName("fee")]
+        public string? Fee { get; set; }
+        /// <summary>
+        /// Fee Received
+        /// </summary>
+        [JsonPropertyName("fee_rcv")]
+        public object? FeeRcv { get; set; }  //Do not know the type at the moment, probably string though
+        /// <summary>
+        /// Transaction
+        /// </summary>
+        [JsonPropertyName("tx")]
+        public string? Tx { get; set; }
+        /// <summary>
+        /// Inscription
+        /// </summary>
+        [JsonPropertyName("ins")]
+        public string? Ins { get; set; }
+        /// <summary>
+        /// Number
+        /// </summary>
+        [JsonPropertyName("num")]
+        public long Num { get; set; }
+        /// <summary>
+        /// Secondary inscription
+        /// </summary>
+        [JsonPropertyName("sins")]
+        public string? Sins { get; set; }
+        /// <summary>
+        /// Secondary Number
+        /// </summary>
+        [JsonPropertyName("snum")]
+        public long Snum { get; set; }
+        /// <summary>
+        /// Timestamp
+        /// </summary>
+        [JsonPropertyName("ts")]
+        public long Ts { get; set; }
+        /// <summary>
+        /// Failure Flag
+        /// </summary>
+        [JsonPropertyName("fail")]
+        public bool Fail { get; set; }
+    }
+
 }
