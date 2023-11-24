@@ -134,6 +134,12 @@ namespace TapperSharp.Services
                 case "accountReceiveList":
                     HandleGenericResponse<List<AccountRecieveListResult>>(jsonResponse, jsonResponseBase.CallId);
                     break;
+                case "accumulatorList":
+                    HandleGenericResponse<List<AccumulatorListResult>>(jsonResponse, jsonResponseBase.CallId);
+                    break;
+                case "accumulator":
+                    HandleGenericResponse<AccumulatorListResult>(jsonResponse, jsonResponseBase.CallId);
+                    break;
                 default:
                     Console.WriteLine("Unhandled function type: " + func);
                     Console.WriteLine("Response: " + jsonResponse);
@@ -556,6 +562,7 @@ namespace TapperSharp.Services
             return response as TapResponse<long>;
         }
 
+        /// <inheritdoc/>
         public async Task<TapResponse<long>?> GetAccountSentListLengthAsync(string address, string ticker)
         {
             var callId = Guid.NewGuid().ToString();
@@ -572,7 +579,8 @@ namespace TapperSharp.Services
             var response = await completionSource.Task;
             return response as TapResponse<long>;
         }
-
+        
+        /// <inheritdoc/>
         public async Task<TapResponse<List<SendListResult>>?> GetAccountSentListAsync(string address, string ticker, int offset, int max)
         {
             var callId = Guid.NewGuid().ToString();
@@ -590,6 +598,7 @@ namespace TapperSharp.Services
             return response as TapResponse<List<SendListResult>>;
         }
 
+        /// <inheritdoc/>
         public async Task<TapResponse<long>?> GetTickerSentListLengthAsync(string ticker)
         {
             var callId = Guid.NewGuid().ToString();
@@ -607,6 +616,7 @@ namespace TapperSharp.Services
             return response as TapResponse<long>;
         }
 
+        /// <inheritdoc/>
         public async Task<TapResponse<List<SendListResult>>?> GetTickerSentListAsync(string ticker, int offset, int max)
         {
             var callId = Guid.NewGuid().ToString();
@@ -624,6 +634,7 @@ namespace TapperSharp.Services
             return response as TapResponse<List<SendListResult>>;
         }
 
+        /// <inheritdoc/>
         public async Task<TapResponse<long>?> GetSentListLengthAsync()
         {
             var callId = Guid.NewGuid().ToString();
@@ -641,6 +652,7 @@ namespace TapperSharp.Services
             return response as TapResponse<long>;
         }
 
+        /// <inheritdoc/>
         public async Task<TapResponse<List<SendListResult>>?> GetSentListAsync(int offset, int max)
         {
             var callId = Guid.NewGuid().ToString();
@@ -658,6 +670,7 @@ namespace TapperSharp.Services
             return response as TapResponse<List<SendListResult>>;
         }
 
+        /// <inheritdoc/>
         public async Task<TapResponse<long>?> GetAccountReceiveListLengthAsync(string address, string ticker)
         {
             var callId = Guid.NewGuid().ToString();
@@ -675,6 +688,7 @@ namespace TapperSharp.Services
             return response as TapResponse<long>;
         }
 
+        /// <inheritdoc/>
         public async Task<TapResponse<List<AccountRecieveListResult>>?> GetAccountReceiveListAsync(string address, string ticker, int offset, int max)
         {
             var callId = Guid.NewGuid().ToString();
@@ -690,6 +704,40 @@ namespace TapperSharp.Services
             });
             var response = await completionSource.Task;
             return response as TapResponse<List<AccountRecieveListResult>>;
+        }
+
+        public async Task<TapResponse<AccumulatorListResult>?> GetAccumulatorAsync(string inscriptionId)
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "accumulator",
+                Args = new object[] { inscriptionId },
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<AccumulatorListResult>;
+        }
+
+        public async Task<TapResponse<List<AccumulatorListResult>>?> GetAccumulatorListAsync(int offset, int max)
+        {
+            var callId = Guid.NewGuid().ToString();
+
+            var completionSource = new TaskCompletionSource<object>();
+            _responseCompletionSources[callId] = completionSource;
+
+            await _client.EmitAsync("get", new TapRequest()
+            {
+                Func = "accumulatorList",
+                Args = new object[] { offset, max },
+                CallId = callId
+            });
+            var response = await completionSource.Task;
+            return response as TapResponse<List<AccumulatorListResult>>;
         }
     }
 }

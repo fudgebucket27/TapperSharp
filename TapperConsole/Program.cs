@@ -23,9 +23,20 @@ namespace TapperConsole
             {
                 await tapperClient.ConnectAsync();
 
+                var accumulatorList = await tapperClient.GetAccumulatorListAsync(0, 10);
+                Console.WriteLine(JsonSerializer.Serialize(accumulatorList, new JsonSerializerOptions() { WriteIndented = true }));
 
-                var tickerSentList = await tapperClient.GetSentListAsync(0, 10);
-                Console.WriteLine(JsonSerializer.Serialize(tickerSentList, new JsonSerializerOptions() { WriteIndented = true }));
+                var accumulator2 = await tapperClient.GetAccumulatorAsync("4fdfac67e25701a292530303e32b0ec4fd0799d31d0691184f392e194529b5e8i0");
+                Console.WriteLine(JsonSerializer.Serialize(accumulator2, new JsonSerializerOptions() { WriteIndented = true }));
+
+                var accumulator = await tapperClient.GetAccumulatorAsync("040b39c793028677de567eeecfd181fef82eef7313b1764cf2090a283653d06ai0");
+                Console.WriteLine(JsonSerializer.Serialize(accumulator, new JsonSerializerOptions() { WriteIndented = true }));
+
+
+
+
+                //var tickerSentList = await tapperClient.GetSentListAsync(0, 10);
+                //Console.WriteLine(JsonSerializer.Serialize(tickerSentList, new JsonSerializerOptions() { WriteIndented = true }));
 
                 //var tickerSentList = await tapperClient.GetTickerSentListAsync("-tap", 0 , 10);
                 //Console.WriteLine(JsonSerializer.Serialize(tickerSentList, new JsonSerializerOptions() { WriteIndented = true }));

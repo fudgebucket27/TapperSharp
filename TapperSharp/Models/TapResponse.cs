@@ -430,4 +430,86 @@ namespace TapperSharp.Models
         public bool Int { get; set; }
     }
 
+    public class AccumulatorListItem
+    {
+        /// <summary>
+        /// The ticker
+        /// </summary>
+        [JsonPropertyName("tick")]
+        public string? Tick { get; set; }
+        /// <summary>
+        /// The amount
+        /// </summary>
+        [JsonPropertyName("amt")]
+        public string? Amt { get; set; }
+        /// <summary>
+        /// The address
+        /// </summary>
+        [JsonPropertyName("address")]
+        public string? Address { get; set; }
+    }
+
+    public class AccumulatorListJson
+    {
+        /// <summary>
+        /// The protocol
+        /// </summary>
+        [JsonPropertyName("p")]
+        public string? P { get; set; }
+        /// <summary>
+        /// The operation
+        /// </summary>
+        [JsonPropertyName("op")]
+        public string? Op { get; set; }
+        /// <summary>
+        /// The accumulator list items
+        /// </summary>
+        [JsonPropertyName("items")]
+        public List<AccumulatorListItem>? Items { get; set; }
+    }
+
+    public class AccumulatorListResult
+    {
+        /// <summary>
+        /// The opertionl
+        /// </summary>
+        [JsonPropertyName("op")]
+        public string? Op { get; set; }
+        /// <summary>
+        /// The json list 
+        /// </summary>
+        [JsonPropertyName("json")]
+        public AccumulatorListJson? Json { get; set; }
+        /// <summary>
+        /// The inscription id
+        /// </summary>
+        [JsonPropertyName("ins")]
+        public string? Ins { get; set; }
+        /// <summary>
+        /// The block
+        /// </summary>
+        [JsonPropertyName("blck")]
+        public long Blck { get; set; }
+        /// <summary>
+        /// The transaction
+        /// </summary>
+        [JsonPropertyName("tx")]
+        public string? Tx { get; set; }
+        /// <summary>
+        /// The number
+        /// </summary>
+        [JsonPropertyName("num")]
+        public long Num { get; set; }
+        /// <summary>
+        /// The timestamp
+        /// </summary>
+        [JsonPropertyName("ts")]
+        public long Ts { get; set; }
+        /// <summary>
+        /// The address
+        /// </summary>
+        [JsonPropertyName("addr")]
+        public string? Addr { get; set; }
+    }
+
 }

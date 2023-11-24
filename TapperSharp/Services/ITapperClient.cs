@@ -296,5 +296,25 @@ namespace TapperSharp.Services
         /// <returns>The tokens recieved</returns>
         /// <exception cref="Exception">Thrown when an error occurs</exception>
         Task<TapResponse<List<AccountRecieveListResult>>?> GetAccountReceiveListAsync(string address, string ticker, int offset, int max);
+
+
+        /// <summary>
+        /// Get accumlator object for internal functions, including the inscribed json object
+        /// Returns null if the accumulator object doesn't exist.
+        /// </summary>
+        /// <param name="inscriptionId">The inscription id</param>
+        /// <returns>The tokens recieved</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<AccumulatorListResult>?> GetAccumulatorAsync(string inscriptionId);
+
+        /// <summary>
+        /// Get accumulator list based on offset and max value. Max value limit is 500.
+        /// Items  that may have been tapped already are show
+        /// </summary>
+        /// <param name="offset">The offset to start getting data from, ie 0</param>
+        /// <param name="max">The max amount of objects to get per request, ie 10. Limit is 500</param>
+        /// <returns>The accumulator list</returns>
+        /// <exception cref="Exception">Thrown when an error occurs</exception>
+        Task<TapResponse<List<AccumulatorListResult>>?> GetAccumulatorListAsync(int offset, int max);
     }
 }
