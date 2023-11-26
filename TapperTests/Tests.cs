@@ -423,7 +423,7 @@ namespace TapperTests
         }
 
         [TestMethod]
-        public async Task GetaAcountReceiveTradesFilledListLength()
+        public async Task GetAccountReceiveTradesFilledListLength()
         {
             var result = await _tapperClient!.GetAccountReceiveTradesFilledListLengthAsync("bc1pepk5alax8jte67z4dgwywyzhyzuuqcdejcnnuswvxj6hapzu9fcs2f5lr3", "taposhi");
             Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
@@ -431,7 +431,7 @@ namespace TapperTests
         }
 
         [TestMethod]
-        public async Task GetaAcountReceiveTradesFilledList()
+        public async Task GetAccountReceiveTradesFilledList()
         {
             var result = await _tapperClient!.GetAccountReceiveTradesFilledListAsync("bc1pepk5alax8jte67z4dgwywyzhyzuuqcdejcnnuswvxj6hapzu9fcs2f5lr3", "taposhi", 0, 10);
             Console.WriteLine(JsonSerializer.Serialize(result, new JsonSerializerOptions() { WriteIndented = true }));
